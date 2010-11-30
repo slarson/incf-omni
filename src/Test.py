@@ -69,8 +69,6 @@ def getEndpoints( tree ):
         if tree.isLeaf(v):
             endpoints.append(v)
     
-      
-
     array_list = []
     for v in endpoints:
         array_list.append(array([v.x, v.y, v.z]));
@@ -78,7 +76,8 @@ def getEndpoints( tree ):
     matrix = []
     for a in array_list:
         matrix = concatenate((matrix, a), axis=0)
-
+    
+    matrix = reshape(matrix,[-1,3])
     return matrix
     
 #def apply_tangible_position_rotation ( endpoints, x_pos, y_pos, z_pos, x_rot, y_rot, z_rot, w_rot)
@@ -97,8 +96,10 @@ t2 = loadTree("http://data.wholebraincatalog.org/datawrappers/generic/BasketCell
 matrix1 = getEndpoints(t1)
 matrix2 = getEndpoints(t2)
 
-print matrix1
-print matrix2
+print shape(matrix1)
+print shape(matrix2)
+#diff_matrix =  matrix1 - matrix2
+#print sum(diff_matrix)
 
 #endpoints1 = getEndpoints(cell_segments1)
 #endpoints1 = apply_tangible_position_rotation(endpoints1, 0, 0, 0, 0, 0, 0, 1)
