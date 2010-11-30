@@ -34,8 +34,10 @@ Begin code doing actual work with WBC library
 from org.wholebrainproject.wbc.app import Application
 from org.wholebrainproject.wbc.data.importer import MorphMLImporter
 from org.wholebrainproject.wbc.tangible import NeuronMorphology
+# imported from bitbucket.org/zornslemon/jnumeric-ra
+from Numeric import *  
 
-def loadDataWrapper( uri_string ):
+def loadTree( uri_string ):
     # get an instance of the Application object
     app = Application();
     # get the local data repository
@@ -50,10 +52,34 @@ def loadDataWrapper( uri_string ):
     data = importer.getData()
     #set the data back on the wrapper so it can be accessed easily
     data_wrapper.setDownloaded(data)
-    return data_wrapper
+    #initialize a new NeuronMorphology to work with the data in the data wrapper
+    nm = NeuronMorphology()
+    #set the data wrapper
+    nm.setDataWrapper(data_wrapper)
+    #get the neuron back as a JUNG tree
+    t = nm.asTree()
+    return t
 
-#def getEndpoints( cell_segments ):
-    #walk along segments to find end points -- tree search
+def getEndpoints( tree ):
+    #walk along tree to find end points -- tree search
+    #return results as a JNumeric matrix with columns
+    # x y z and one row per endpoint
+    endpoints = []
+    for v in tree.getVertices():
+        if tree.isLeaf(v):
+            endpoints.append(v)
+    
+      
+
+    array_list = []
+    for v in endpoints:
+        array_list.append(array([v.x, v.y, v.z]));
+    
+    matrix = []
+    for a in array_list:
+        matrix = concatenate((matrix, a), axis=0)
+
+    return matrix
     
 #def apply_tangible_position_rotation ( endpoints, x_pos, y_pos, z_pos, x_rot, y_rot, z_rot, w_rot)
     #apply the position and rotation to the endpoints, translating and rotating them
@@ -64,21 +90,16 @@ def loadDataWrapper( uri_string ):
     # add distance to array
     # return average of this array.
     
-data_wrapper = loadDataWrapper ("http://data.wholebraincatalog.org/datawrappers/generic/o3x4d")
+t1 = loadTree ("http://data.wholebraincatalog.org/datawrappers/generic/o3x4d")
+t2 = loadTree("http://data.wholebraincatalog.org/datawrappers/generic/BasketCell")
+#t2 = loadTree( "http://data.wholebraincatalog.org/datawrappers/generic/gm7h5" )
 
-#initialize a new NeuronMorphology to work with the data in the data wrapper
-nm = NeuronMorphology();
-#set the data wrapper
-nm.setDataWrapper(data_wrapper);
-#get the neuron back as a JUNG tree
-t = nm.asTree();
+matrix1 = getEndpoints(t1)
+matrix2 = getEndpoints(t2)
 
-endpoints = []
-for v in t.getVertices():
-    if t.isLeaf(v):
-        endpoints.append(v)
-        
-print len(endpoints)
+print matrix1
+print matrix2
+
 #endpoints1 = getEndpoints(cell_segments1)
 #endpoints1 = apply_tangible_position_rotation(endpoints1, 0, 0, 0, 0, 0, 0, 1)
 #endpoints2 = getEndpoints(cell_segments2)
@@ -89,12 +110,4 @@ print len(endpoints)
 #print out some coordinates from a segment
 #print str(cell_segments1[0].getDistal().getX()) + ", " + str(cell_segments1[0].getProximal().getX())
 
-# imported from bitbucket.org/zornslemon/jnumeric-ra
-'''
-from Numeric import *
-x = array([[1,2,3],[4,5,6]])
-print x.shape
-y = array([[1,2],[3,4],[5,6]])
-print y.shape
-print dot(x,y)
-'''
+
