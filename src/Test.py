@@ -85,7 +85,7 @@ def get_distance( array1, array2 ):
     return sum(squared)
 
 def get_distance_matrix( matrix1, matrix2 ):
-    distance_matrix = zeros([shape(matrix1)[0],shape(matrix2)[0]], typecode='F')
+    distance_matrix = zeros([shape(matrix1)[0],shape(matrix2)[0]], typecode='D')
     i = 0
     for array1 in matrix1[:]:
         j = 0
@@ -108,6 +108,9 @@ matrix1 = getEndpoints(t1)
 matrix2 = getEndpoints(t2)
 
 distance_matrix = get_distance_matrix(matrix1, matrix2)
+for row in distance_matrix[:]:
+    min_distance = sorted(row, key=lambda x: x.real)[0].real
+    print min_distance
 
 
 #diff_matrix =  matrix1 - matrix2
