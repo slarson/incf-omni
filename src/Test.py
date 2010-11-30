@@ -17,8 +17,7 @@ for path in paths:
 # doesn't seem to make any difference
 import os
 os.putenv("CLASSPATH",classpath)
-#print os.environ["CLASSPATH"]
-
+os.environ["CLASSPATH"] = classpath
 
 '''
 Desired algorithm:  Pull out two specific neuronal morphologies
@@ -79,15 +78,27 @@ def getEndpoints( tree ):
     
     matrix = reshape(matrix,[-1,3])
     return matrix
-    
+
+def get_distance( array1, array2 ):
+    diff_array = array1 - array2
+    squared = diff_array * diff_array
+    return sum(squared)
+
+def get_distance_matrix( matrix1, matrix2 ):
+    distance_matrix = zeros([shape(matrix1)[0],shape(matrix2)[0]], typecode='F')
+    i = 0
+    for array1 in matrix1[:]:
+        j = 0
+        for array2 in matrix2[:]:
+            num = get_distance(array(array1), array(array2))
+            distance_matrix[i,j] = num
+            j = j + 1
+        i = i + 1
+    return distance_matrix
+
 #def apply_tangible_position_rotation ( endpoints, x_pos, y_pos, z_pos, x_rot, y_rot, z_rot, w_rot)
     #apply the position and rotation to the endpoints, translating and rotating them
-    
-#def calculateDistance( endpoints1 endpoints2 )
-    # calculate n^2 distances between all end points
-    # per end point, find nearest neighbor in other list
-    # add distance to array
-    # return average of this array.
+
     
 t1 = loadTree ("http://data.wholebraincatalog.org/datawrappers/generic/o3x4d")
 t2 = loadTree("http://data.wholebraincatalog.org/datawrappers/generic/BasketCell")
@@ -96,8 +107,9 @@ t2 = loadTree("http://data.wholebraincatalog.org/datawrappers/generic/BasketCell
 matrix1 = getEndpoints(t1)
 matrix2 = getEndpoints(t2)
 
-print shape(matrix1)
-print shape(matrix2)
+distance_matrix = get_distance_matrix(matrix1, matrix2)
+
+
 #diff_matrix =  matrix1 - matrix2
 #print sum(diff_matrix)
 
