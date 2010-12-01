@@ -1,6 +1,10 @@
 '''
 Created on Nov 27, 2010
 
+Calculate the distance matrix between a set of NeuronMorphology end points via WBC
+tangible download
+
+Run via Jython
 @author: slarson
 '''
 # not sure if this is making any difference
@@ -141,6 +145,11 @@ for f1 in forests:
     for f2 in forests:
         min_distance_complete_set.append(distance_between_endpoints(f1, f2))
 
+f = open('results.txt', 'w')
+
+import pickle
+pickle.dump(min_distance_complete_set, f)
+f.close()
 #t1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/s1pdd")
 #t1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/s1pdd2")
 #t2 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/uafys")
