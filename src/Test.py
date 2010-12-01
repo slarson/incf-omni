@@ -112,18 +112,9 @@ for row in distance_matrix[:]:
     min_distance = sorted(row, key=lambda x: x.real)[0].real
     print min_distance
 
-
-#diff_matrix =  matrix1 - matrix2
-#print sum(diff_matrix)
-
 #endpoints1 = getEndpoints(cell_segments1)
 #endpoints1 = apply_tangible_position_rotation(endpoints1, 0, 0, 0, 0, 0, 0, 1)
 #endpoints2 = getEndpoints(cell_segments2)
 #endpoints2 = apply_tangible_position_rotation(endpoints2, 0, 0, 0, 0, 0, 0, 1)
-
-#avg_distance = calculateDistance(endpoints1, endpoints2)
-
-#print out some coordinates from a segment
-#print str(cell_segments1[0].getDistal().getX()) + ", " + str(cell_segments1[0].getProximal().getX())
 
 
