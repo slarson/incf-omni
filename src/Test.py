@@ -95,9 +95,38 @@ http://data.wholebraincatalog.org/tangibles/cellinstances/pgo54 -> 060710_1Rflip
 http://data.wholebraincatalog.org/tangibles/cellinstances/qjqcd -> 072010_1L_N
 http://data.wholebraincatalog.org/tangibles/cellinstances/tc1kk -> 080410_5L_N
 '''
+def distance_between_endpoints( uri_string1, uri_string2 ):
+    f1 = loadMorphology(uri_string1)
+    f2 = loadMorphology(uri_string2) 
+    
+    #get the end points for both matrices
+    #where the matrix has 3 columns (x,y,z)
+    # and # of rows equal to the number of endpoints per
+    # forest
+    matrix1 = getEndpoints(f1)
+    matrix2 = getEndpoints(f2)
+    
+    #calculate a distance matrix between the sets of endpoints
+    #where each row has the distances between a point in matrix1
+    # and all points in matrix2
+    distance_matrix = get_distance_matrix(matrix1, matrix2)
+    
+    #walk the distance matrix row by row, sort the row, and give the 
+    # min distance as the first (smallest) item in that row
+    min_distance = []
+    for row in distance_matrix[:]:
+        #sort the row.  
+        #use special sort due to complex numbers
+        #present in matrix.
+        s = sorted(row, key=lambda x: x.real)[0].real
+        min_distance.append(s)
+        
+    return min_distance
 
-f1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/yazvy")
-f2 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/94cmu") 
+min_distance = distance_between_endpoints("http://137.131.164.54:8182/tangibles/cellinstances/yazvy",
+                                          "http://137.131.164.54:8182/tangibles/cellinstances/94cmu")
+print min_distance
+
 #t1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/s1pdd")
 #t1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/s1pdd2")
 #t2 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/uafys")
@@ -105,24 +134,4 @@ f2 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/94cmu")
 #t2 = loadMorphology("http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx")
 #t2 = loadTree("http://data.wholebraincatalog.org/datawrappers/generic/BasketCell")
 #t2 = loadTree( "http://data.wholebraincatalog.org/datawrappers/generic/gm7h5" )
-
-#get the end points for both matrices
-#where the matrix has 3 columns (x,y,z)
-# and # of rows equal to the number of endpoints per
-# forest
-matrix1 = getEndpoints(f1)
-matrix2 = getEndpoints(f2)
-
-#calculate a distance matrix between the sets of endpoints
-#where each row has the distances between a point in matrix1
-# and all points in matrix2
-distance_matrix = get_distance_matrix(matrix1, matrix2)
-
-#walk the distance matrix row by row, sort the row, and give the 
-# min distance as the first (smallest) item in that row
-for row in distance_matrix[:]:
-    min_distance = sorted(row, key=lambda x: x.real)[0].real
-    print min_distance
-
-
 
