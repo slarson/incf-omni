@@ -38,44 +38,24 @@ from Numeric import *
 
 def loadMorphology ( uri_string ):
     app = Application()
+    
+    app.setServerLocation("http://137.131.164.54:8182");
     #get factory for producing tangibles
     factory = app.getTangibleFactory()
     #load by uri
     nm = factory.createNeuronMorphology(uri_string)
-    #get neuron as JUNG tree
-    t = nm.asTree()
+    #get neuron as JUNG forest
+    t = nm.asForest()
     return t
 
-def loadTree( uri_string ):
-    # get an instance of the Application object
-    app = Application()
-    # get the local data repository
-    data_repo = app.getLocalDataRepository()
-    #get the data wrapper
-    data_wrapper = data_repo.getDataWrapper(uri_string)
-    # look up a specific neuroML morphology data wrapper by its WBC ID
-    cell_location = data_wrapper.getLocation()
-    #get an appropriate importer for this type of data wrapper
-    importer = MorphMLImporter(cell_location)
-    #import the data
-    data = importer.getData()
-    #set the data back on the wrapper so it can be accessed easily
-    data_wrapper.setDownloaded(data)
-    #initialize a new NeuronMorphology to work with the data in the data wrapper
-    nm = NeuronMorphology()
-    #set the data wrapper
-    nm.setDataWrapper(data_wrapper)
-    #get the neuron back as a JUNG tree
-    t = nm.asTree()
-    return t
 
-def getEndpoints( tree ):
-    #walk along tree to find end points -- tree search
+def getEndpoints( forest ):
+    #find end points (either leaves or roots) -- tree search
     #return results as a JNumeric matrix with columns
     # x y z and one row per endpoint
     endpoints = []
-    for v in tree.getVertices():
-        if tree.isLeaf(v):
+    for v in forest.getVertices():
+        if forest.isLeaf(v) or forest.isRoot(v):
             endpoints.append(v)
     
     array_list = []
@@ -105,28 +85,44 @@ def get_distance_matrix( matrix1, matrix2 ):
             j = j + 1
         i = i + 1
     return distance_matrix
-
-#def apply_tangible_position_rotation ( endpoints, x_pos, y_pos, z_pos, x_rot, y_rot, z_rot, w_rot)
-    #apply the position and rotation to the endpoints, translating and rotating them
-
     
-t1 = loadTree ("http://data.wholebraincatalog.org/datawrappers/generic/o3x4d")
-t2 = loadMorphology("http://data.wholebraincatalog.org/tangibles/cellinstances/Ba2_1")
+'''
+http://data.wholebraincatalog.org/tangibles/cellinstances/yazvy -> 011810_4R_flipN
+http://data.wholebraincatalog.org/tangibles/cellinstances/94cmu -> 022510_1L_N
+http://data.wholebraincatalog.org/tangibles/cellinstances/dpkg6 -> 053110_1R_flipN
+http://data.wholebraincatalog.org/tangibles/cellinstances/nvjem -> 060710_1L_N
+http://data.wholebraincatalog.org/tangibles/cellinstances/pgo54 -> 060710_1Rflip_N
+http://data.wholebraincatalog.org/tangibles/cellinstances/qjqcd -> 072010_1L_N
+http://data.wholebraincatalog.org/tangibles/cellinstances/tc1kk -> 080410_5L_N
+'''
+
+f1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/yazvy")
+f2 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/94cmu") 
+#t1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/s1pdd")
+#t1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/s1pdd2")
+#t2 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/uafys")
+#t2 = loadMorphology("http://data.wholebraincatalog.org/tangibles/cellinstances/Ba2_1")
 #t2 = loadMorphology("http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx")
 #t2 = loadTree("http://data.wholebraincatalog.org/datawrappers/generic/BasketCell")
 #t2 = loadTree( "http://data.wholebraincatalog.org/datawrappers/generic/gm7h5" )
 
-matrix1 = getEndpoints(t1)
-matrix2 = getEndpoints(t2)
+#get the end points for both matrices
+#where the matrix has 3 columns (x,y,z)
+# and # of rows equal to the number of endpoints per
+# forest
+matrix1 = getEndpoints(f1)
+matrix2 = getEndpoints(f2)
 
+#calculate a distance matrix between the sets of endpoints
+#where each row has the distances between a point in matrix1
+# and all points in matrix2
 distance_matrix = get_distance_matrix(matrix1, matrix2)
+
+#walk the distance matrix row by row, sort the row, and give the 
+# min distance as the first (smallest) item in that row
 for row in distance_matrix[:]:
     min_distance = sorted(row, key=lambda x: x.real)[0].real
     print min_distance
 
-#endpoints1 = getEndpoints(cell_segments1)
-#endpoints1 = apply_tangible_position_rotation(endpoints1, 0, 0, 0, 0, 0, 0, 1)
-#endpoints2 = getEndpoints(cell_segments2)
-#endpoints2 = apply_tangible_position_rotation(endpoints2, 0, 0, 0, 0, 0, 0, 1)
 
 
