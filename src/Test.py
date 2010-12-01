@@ -36,9 +36,19 @@ from org.wholebrainproject.wbc.tangible import NeuronMorphology
 # imported from bitbucket.org/zornslemon/jnumeric-ra
 from Numeric import *  
 
+def loadMorphology ( uri_string ):
+    app = Application()
+    #get factory for producing tangibles
+    factory = app.getTangibleFactory()
+    #load by uri
+    nm = factory.createNeuronMorphology(uri_string)
+    #get neuron as JUNG tree
+    t = nm.asTree()
+    return t
+
 def loadTree( uri_string ):
     # get an instance of the Application object
-    app = Application();
+    app = Application()
     # get the local data repository
     data_repo = app.getLocalDataRepository()
     #get the data wrapper
@@ -101,7 +111,9 @@ def get_distance_matrix( matrix1, matrix2 ):
 
     
 t1 = loadTree ("http://data.wholebraincatalog.org/datawrappers/generic/o3x4d")
-t2 = loadTree("http://data.wholebraincatalog.org/datawrappers/generic/BasketCell")
+t2 = loadMorphology("http://data.wholebraincatalog.org/tangibles/cellinstances/Ba2_1")
+#t2 = loadMorphology("http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx")
+#t2 = loadTree("http://data.wholebraincatalog.org/datawrappers/generic/BasketCell")
 #t2 = loadTree( "http://data.wholebraincatalog.org/datawrappers/generic/gm7h5" )
 
 matrix1 = getEndpoints(t1)
