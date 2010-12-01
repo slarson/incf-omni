@@ -86,15 +86,6 @@ def get_distance_matrix( matrix1, matrix2 ):
         i = i + 1
     return distance_matrix
     
-'''
-http://data.wholebraincatalog.org/tangibles/cellinstances/yazvy -> 011810_4R_flipN
-http://data.wholebraincatalog.org/tangibles/cellinstances/94cmu -> 022510_1L_N
-http://data.wholebraincatalog.org/tangibles/cellinstances/dpkg6 -> 053110_1R_flipN
-http://data.wholebraincatalog.org/tangibles/cellinstances/nvjem -> 060710_1L_N
-http://data.wholebraincatalog.org/tangibles/cellinstances/pgo54 -> 060710_1Rflip_N
-http://data.wholebraincatalog.org/tangibles/cellinstances/qjqcd -> 072010_1L_N
-http://data.wholebraincatalog.org/tangibles/cellinstances/tc1kk -> 080410_5L_N
-'''
 def distance_between_endpoints( uri_string1, uri_string2 ):
     f1 = loadMorphology(uri_string1)
     f2 = loadMorphology(uri_string2) 
@@ -123,9 +114,27 @@ def distance_between_endpoints( uri_string1, uri_string2 ):
         
     return min_distance
 
-min_distance = distance_between_endpoints("http://137.131.164.54:8182/tangibles/cellinstances/yazvy",
-                                          "http://137.131.164.54:8182/tangibles/cellinstances/94cmu")
-print min_distance
+'''
+http://data.wholebraincatalog.org/tangibles/cellinstances/yazvy -> 011810_4R_flipN
+http://data.wholebraincatalog.org/tangibles/cellinstances/94cmu -> 022510_1L_N
+http://data.wholebraincatalog.org/tangibles/cellinstances/dpkg6 -> 053110_1R_flipN
+http://data.wholebraincatalog.org/tangibles/cellinstances/nvjem -> 060710_1L_N
+http://data.wholebraincatalog.org/tangibles/cellinstances/pgo54 -> 060710_1Rflip_N
+http://data.wholebraincatalog.org/tangibles/cellinstances/qjqcd -> 072010_1L_N
+http://data.wholebraincatalog.org/tangibles/cellinstances/tc1kk -> 080410_5L_N
+'''
+uri_strings = ["http://137.131.164.54:8182/tangibles/cellinstances/yazvy",
+"http://137.131.164.54:8182/tangibles/cellinstances/94cmu",
+"http://137.131.164.54:8182/tangibles/cellinstances/dpkg6",
+"http://137.131.164.54:8182/tangibles/cellinstances/nvjem",
+"http://137.131.164.54:8182/tangibles/cellinstances/pgo54",
+"http://137.131.164.54:8182/tangibles/cellinstances/qjqcd",
+"http://137.131.164.54:8182/tangibles/cellinstances/tc1kk"]
+
+min_distance_complete_set = []
+for uri_string1 in uri_strings:
+    for uri_string2 in uri_strings:
+        min_distance_complete_set.append(distance_between_endpoints(uri_string1, uri_string2))
 
 #t1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/s1pdd")
 #t1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/s1pdd2")
