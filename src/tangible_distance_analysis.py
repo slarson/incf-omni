@@ -118,20 +118,20 @@ def distance_between_endpoints( f1, f2 ):
 
 '''
 http://data.wholebraincatalog.org/tangibles/cellinstances/yazvy -> 011810_4R_flipN
+http://data.wholebraincatalog.org/tangibles/cellinstances/nvjem -> 060710_1L_N
+http://data.wholebraincatalog.org/tangibles/cellinstances/tc1kk -> 080410_5L_N
 http://data.wholebraincatalog.org/tangibles/cellinstances/94cmu -> 022510_1L_N
 http://data.wholebraincatalog.org/tangibles/cellinstances/dpkg6 -> 053110_1R_flipN
-http://data.wholebraincatalog.org/tangibles/cellinstances/nvjem -> 060710_1L_N
 http://data.wholebraincatalog.org/tangibles/cellinstances/pgo54 -> 060710_1Rflip_N
 http://data.wholebraincatalog.org/tangibles/cellinstances/qjqcd -> 072010_1L_N
-http://data.wholebraincatalog.org/tangibles/cellinstances/tc1kk -> 080410_5L_N
 '''
 uri_strings = ["http://137.131.164.54:8182/tangibles/cellinstances/yazvy",
+"http://137.131.164.54:8182/tangibles/cellinstances/nvjem",
+"http://137.131.164.54:8182/tangibles/cellinstances/tc1kk",
 "http://137.131.164.54:8182/tangibles/cellinstances/94cmu",
 "http://137.131.164.54:8182/tangibles/cellinstances/dpkg6",
-"http://137.131.164.54:8182/tangibles/cellinstances/nvjem",
 "http://137.131.164.54:8182/tangibles/cellinstances/pgo54",
-"http://137.131.164.54:8182/tangibles/cellinstances/qjqcd",
-"http://137.131.164.54:8182/tangibles/cellinstances/tc1kk"]
+"http://137.131.164.54:8182/tangibles/cellinstances/qjqcd"]
 
 #download and convert all forests upfront 
 # to avoid repetative network crunching
