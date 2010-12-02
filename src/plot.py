@@ -26,6 +26,8 @@ for distances in distances_set:
     #ax.set_title(r'$\mathrm{Histogram\ of\ IQ:}\ \mu=100,\ \sigma=15$')
     #ax.set_xlim(40, 160)
     #ax.set_ylim(0, 0.03)
+    plt.xticks([])
+    plt.yticks([])
     ax.grid(True)
     i = i + 1
 
