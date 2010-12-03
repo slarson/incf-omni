@@ -125,6 +125,8 @@ http://data.wholebraincatalog.org/tangibles/cellinstances/dpkg6 -> 053110_1R_fli
 http://data.wholebraincatalog.org/tangibles/cellinstances/pgo54 -> 060710_1Rflip_N
 http://data.wholebraincatalog.org/tangibles/cellinstances/qjqcd -> 072010_1L_N
 '''
+
+''' --original set
 uri_strings = ["http://137.131.164.54:8182/tangibles/cellinstances/yazvy",
 "http://137.131.164.54:8182/tangibles/cellinstances/nvjem",
 "http://137.131.164.54:8182/tangibles/cellinstances/tc1kk",
@@ -132,6 +134,12 @@ uri_strings = ["http://137.131.164.54:8182/tangibles/cellinstances/yazvy",
 "http://137.131.164.54:8182/tangibles/cellinstances/dpkg6",
 "http://137.131.164.54:8182/tangibles/cellinstances/pgo54",
 "http://137.131.164.54:8182/tangibles/cellinstances/qjqcd"]
+'''
+# control set
+uri_strings = ["http://137.131.164.54:8182/tangibles/cellinstances/76ux2",
+"http://137.131.164.54:8182/tangibles/cellinstances/94cmu",
+"http://137.131.164.54:8182/tangibles/cellinstances/94cmu2",
+"http://137.131.164.54:8182/tangibles/cellinstances/94cmu3"]
 
 #download and convert all forests upfront 
 # to avoid repetative network crunching
