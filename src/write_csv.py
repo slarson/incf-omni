@@ -17,15 +17,9 @@ for distance_set in distances_set:
 
 #write out the histogram for each distance comparison
 import numpy as np    
-writer2 = csv.writer(open('histogram_vals.csv', 'wb'), dialect='excel')
+writer2 = csv.writer(open('histogram_plus_stats.csv', 'wb'), dialect='excel')
+writer2.writerow(["bin1","bin2","bin3","bin4","bin5","bin6","bin7","bin8","bin9","bin10","mean","median", "std. dev"])
 for distance_set in distances_set:
     #write a row with the values as the number
     # of points that fall into a 10 bin histogram
-    writer2.writerow(np.histogram(distance_set)[0])
-    
-writer3 = csv.writer(open('stats.csv', 'wb'), dialect='excel')
-writer3.writerow("mean", "median", "standard deviation")
-for distance_set in distances_set:
-    #write a row with the values as the number
-    # of points that fall into a 10 bin histogram
-    writer3.writerow(np.mean(distance_set), np.median(distance_set), np.std(distance_set))
+    writer2.writerow(np.append(np.histogram(distance_set)[0],[np.mean(distance_set), np.median(distance_set), np.std(distance_set)]))
