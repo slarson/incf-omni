@@ -15,9 +15,11 @@ import matplotlib.mlab as mlab
 
 fig = plt.figure()
 
+length = len(distances_set)
+size = np.sqrt(length)
 i = 0
 for distances in distances_set:
-    ax = fig.add_subplot(7,7,i+1)
+    ax = fig.add_subplot(size,size,i+1)
      # the histogram of the data
     n, bins, patches = ax.hist(distances, 10, facecolor='green', alpha=0.75)
     
