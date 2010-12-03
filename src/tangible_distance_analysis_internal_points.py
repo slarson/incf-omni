@@ -60,7 +60,7 @@ def getInternalPoints( forest ):
     intpoints = []
     for i, v in enumerate(forest.getVertices()):
         if (not forest.isLeaf(v)) and (not forest.isRoot(v)):
-            if (i % 3 == 0): #skip 2 out of 3 points to conserve memory
+            if (i % 5 == 0): #skip 4 out of 5 points to conserve memory
                 intpoints.append(v)
     
     array_list = []
