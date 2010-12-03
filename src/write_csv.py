@@ -22,3 +22,10 @@ for distance_set in distances_set:
     #write a row with the values as the number
     # of points that fall into a 10 bin histogram
     writer2.writerow(np.histogram(distance_set)[0])
+    
+writer3 = csv.writer(open('stats.csv', 'wb'), dialect='excel')
+writer3.writerow("mean", "median", "standard deviation")
+for distance_set in distances_set:
+    #write a row with the values as the number
+    # of points that fall into a 10 bin histogram
+    writer3.writerow(np.mean(distance_set), np.median(distance_set), np.std(distance_set))
