@@ -1,9 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>OMNI</groupId>
-	<artifactId>OMNI</artifactId>
+	<groupId>org.incf</groupId>
+	<artifactId>omni</artifactId>
+	<name>Object Model for Neuroinformatics</name>
 	<version>0.0.1-SNAPSHOT</version>
+	<organization>
+		<name>International Neuroinformatics Coordinating Facility</name>
+		<url>http://incf.org</url>
+	</organization>
+	<!--
+		This document is a "project object model" from the Maven2 build
+		management system (http://maven.apache.org). Please download Maven and
+		run "mvn clean install" in the directory where this file lives to get
+		started.
+	-->
 	<build>
 		<plugins>
 			<plugin>
@@ -67,4 +78,18 @@
 			<version>2.5.1_ra0.1</version>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>openccdb-public</id>
+			<url>http://openccdb.org:8081/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>openccdb-snapshot</id>
+			<url>http://openccdb.org:8081/nexus/content/groups/public-snapshots</url>
+		</repository>
+		<repository>
+			<id>openccdb-thirdparty</id>
+			<url>http://openccdb.org:8081/nexus/content/repositories/thirdparty</url>
+		</repository>
+	</repositories>
 </project>
