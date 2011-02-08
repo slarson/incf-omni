@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.incf</groupId>
 	<artifactId>omni</artifactId>
-	<name>Object Model for Neuroinformatics</name>
+	<name>INCF Object Model for Neuroinformatics</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<organization>
 		<name>International Neuroinformatics Coordinating Facility</name>
@@ -18,33 +18,26 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
+				<!--
+					This goal will force Maven to build all included POMs up to the
+					package phase BEFORE the assembly is processed.
+				-->
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2-beta-2</version>
 				<executions>
 					<execution>
-						<id>unpack</id>
-						<phase>package</phase>
+						<phase>install</phase>
 						<goals>
-							<goal>copy-dependencies</goal>
+							<goal>assembly</goal>
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>package</phase>
-						<goals>
-							<goal>build-classpath</goal>
-						</goals>
-						<configuration>
-							<outputFile>classpath.txt</outputFile>
-						</configuration>
-					</execution>
-				</executions>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/descriptor-1-jar-with-dep.xml
+						</descriptor>
+					</descriptors>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -68,7 +61,7 @@
 		<dependency>
 			<groupId>org.wholebrainproject</groupId>
 			<artifactId>wbc-core</artifactId>
-			<version>0.7.7.14-SNAPSHOT</version>
+			<version>0.7.7.16-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -85,11 +78,13 @@
 		</repository>
 		<repository>
 			<id>openccdb-snapshot</id>
-			<url>http://openccdb.org:8081/nexus/content/groups/public-snapshots</url>
+			<url>http://openccdb.org:8081/nexus/content/groups/public-snapshots
+			</url>
 		</repository>
 		<repository>
 			<id>openccdb-thirdparty</id>
-			<url>http://openccdb.org:8081/nexus/content/repositories/thirdparty</url>
+			<url>http://openccdb.org:8081/nexus/content/repositories/thirdparty
+			</url>
 		</repository>
 	</repositories>
 </project>

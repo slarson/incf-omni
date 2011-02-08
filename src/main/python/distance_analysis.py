@@ -37,8 +37,8 @@ def distance_between_intpoints( p1, p2 ):
     #where the matrix has 3 columns (x,y,z)
     # and # of rows equal to the number of internal points per
     # forest
-    matrix1 = matrixify(f1)
-    matrix2 = matrixify(f2)
+    matrix1 = matrixify(p1)
+    matrix2 = matrixify(p2)
     
     #calculate a distance matrix between the sets of internal points
     #where each row has the distances between a point in matrix1
