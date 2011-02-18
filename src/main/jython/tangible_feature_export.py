@@ -57,7 +57,9 @@ def getInternalPoints( forest ):
 SCRIPT BEGINS HERE
 '''
 
-uri_strings = ["http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx"]
+uri_strings = ["http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx",
+               "http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1128",
+               "http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1130"]
 
 # load the neuron from the Whole Brain Catalog
 # as a JUNG forest into the forests array
@@ -78,4 +80,4 @@ f = open('points.txt', 'w')
 pickle.dump(internal_points, f)
 f.close()
 
-print "Wrote points.txt as a pickle file with contents of http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx"
+print "Wrote points.txt as a pickle file with contents of http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx, http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1128, http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1130"

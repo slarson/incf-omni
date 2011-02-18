@@ -8,9 +8,9 @@ import numpy as np
 def matrixify (array_list):
     matrix = []
     for a in array_list:
-        matrix = concatenate((matrix, a), axis=0)
+        matrix = np.concatenate((matrix, a), axis=0)
     
-    matrix = reshape(matrix,[-1,3])
+    matrix = np.reshape(matrix,[-1,3])
     return matrix
 
 def get_distance( array1, array2 ):
@@ -19,13 +19,13 @@ def get_distance( array1, array2 ):
     return sum(squared)
 
 def get_distance_matrix( matrix1, matrix2 ):
-    distance_matrix = zeros([shape(matrix1)[0],shape(matrix2)[0]], typecode='D')
+    distance_matrix = np.zeros([np.shape(matrix1)[0],np.shape(matrix2)[0]])
     #change this to matrix form
     i = 0
     for array1 in matrix1[:]:
         j = 0
         for array2 in matrix2[:]:
-            num = get_distance(array(array1), array(array2))
+            num = get_distance(np.array(array1), np.array(array2))
             distance_matrix[i,j] = num
             j = j + 1
         i = i + 1
@@ -71,3 +71,10 @@ min_distance_complete_set = []
 for p1 in points_set:
     for p2 in points_set:
         min_distance_complete_set.append(distance_between_intpoints(p1, p2))
+        
+# write out results
+f = open('results.txt', 'w')
+pickle.dump(min_distance_complete_set, f)
+f.close()
+
+print "Wrote distance analysis out as results.txt"
