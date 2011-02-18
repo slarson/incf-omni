@@ -1,89 +1,81 @@
 '''
-Created on Nov 27, 2010
+Originally reated on Nov 27, 2010
+Modified into a general example on Feb 18, 2011
 
-Export a set of NeuronMorphology *INTERNAL* points via WBC
-tangible download
+Export all non-endpoints from a neuron morphology stored in the Whole Brain Catalog.  Export these as x,y,z coordinates in a Python pickle file.  This is step one in a two step process to
+analyze the contents of a neuron morphology from the Whole Brain
+ Catalog.  Step 2 will be to import the Python pickle file with 
+a pure Python script and work with it using NumPy and Matplotlib
+modules.
 
 Run via Jython
 @author: slarson
-
-Begin code doing actual work with WBC library
 '''
-from org.wholebrainproject.wbc.app import Application
-from org.wholebrainproject.wbc.data.importer import MorphMLImporter
-from org.wholebrainproject.wbc.tangible import NeuronMorphology
-from Numeric import *
 
+#Import the Application object from WBC
+from org.wholebrainproject.wbc.app import Application
+#Import the MorphMLImporter object from WBC
+from org.wholebrainproject.wbc.data.importer import MorphMLImporter
+#Import the NeuronMorphology object from WBC
+from org.wholebrainproject.wbc.tangible import NeuronMorphology
+#jython arrays
+from array import array
+
+#get neuron as JUNG forest (http://j.mp/dQSoVe)
 def loadMorphology ( uri_string ):
     app = Application()
-    
     app.setServerLocation("http://data.wholebraincatalog.org");
+
     #get factory for producing tangibles
     factory = app.getTangibleFactory()
+
     #load by uri
     nm = factory.createNeuronMorphology(uri_string)
-    #get neuron as JUNG forest
+
+    #convert NeuronMorphology to JUNG forest
     t = nm.asForest()
     return t
 
-
+#find internal points (non leaves or roots) -- tree search
+#return results as an array with columns
+# x y z and one row per internal
 def getInternalPoints( forest ):
-    #find internal points (non leaves or roots) -- tree search
-    #return results as a JNumeric matrix with columns
-    # x y z and one row per internal
     intpoints = []
     for i, v in enumerate(forest.getVertices()):
         if (not forest.isLeaf(v)) and (not forest.isRoot(v)):
-            if (i % 5 == 0): #skip 4 out of 5 points to conserve memory
+		 #skip 4 out of 5 points to conserve memory
+            if (i % 5 == 0): 
                 intpoints.append(v)
     
     array_list = []
     for v in intpoints:
-        array_list.append(array([v.x, v.y, v.z]));
+        array_list.append(array('f',[v.x, v.y, v.z]));
     
     return array_list
 
+'''
+SCRIPT BEGINS HERE
+'''
 
-'''
-http://data.wholebraincatalog.org/tangibles/cellinstances/yazvy -> 011810_4R_flipN
-http://data.wholebraincatalog.org/tangibles/cellinstances/nvjem -> 060710_1L_N
-http://data.wholebraincatalog.org/tangibles/cellinstances/tc1kk -> 080410_5L_N
-http://data.wholebraincatalog.org/tangibles/cellinstances/94cmu -> 022510_1L_N
-http://data.wholebraincatalog.org/tangibles/cellinstances/dpkg6 -> 053110_1R_flipN
-http://data.wholebraincatalog.org/tangibles/cellinstances/pgo54 -> 060710_1Rflip_N
-http://data.wholebraincatalog.org/tangibles/cellinstances/qjqcd -> 072010_1L_N
-'''
-'''
-uri_strings = ["http://137.131.164.54:8182/tangibles/cellinstances/yazvy",
-"http://137.131.164.54:8182/tangibles/cellinstances/nvjem",
-"http://137.131.164.54:8182/tangibles/cellinstances/tc1kk",
-"http://137.131.164.54:8182/tangibles/cellinstances/94cmu",
-"http://137.131.164.54:8182/tangibles/cellinstances/dpkg6",
-"http://137.131.164.54:8182/tangibles/cellinstances/pgo54",
-"http://137.131.164.54:8182/tangibles/cellinstances/qjqcd"]
-'''
 uri_strings = ["http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx"]
 
-#download and convert all forests upfront 
-# to avoid repetative network crunching
+# load the neuron from the Whole Brain Catalog
+# as a JUNG forest into the forests array
 forests = []
 for uri_string in uri_strings:
     forests.append(loadMorphology(uri_string))
 
+# find the points on the neuron that are not end points, 
+# which we refer to as internal points and get them as a list.
 internal_points = []
 for f in forests:
     internal_points.append(getInternalPoints(f))
 
-f = open('points.txt', 'w')
-
+#Write the points out as a python pickle file so further analysis 
+#can take place outside of Jython.
 import pickle
+f = open('points.txt', 'w')
 pickle.dump(internal_points, f)
 f.close()
-#t1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/s1pdd")
-#t1 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/s1pdd2")
-#t2 = loadMorphology("http://137.131.164.54:8182/tangibles/cellinstances/uafys")
-#t2 = loadMorphology("http://data.wholebraincatalog.org/tangibles/cellinstances/Ba2_1")
-#t2 = loadMorphology("http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx")
-#t2 = loadTree("http://data.wholebraincatalog.org/datawrappers/generic/BasketCell")
-#t2 = loadTree( "http://data.wholebraincatalog.org/datawrappers/generic/gm7h5" )
 
+print "Wrote points.txt as a pickle file with contents of http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx"
