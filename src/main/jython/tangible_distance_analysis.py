@@ -6,24 +6,7 @@ tangible download
 
 Run via Jython
 @author: slarson
-'''
-# not sure if this is making any difference
-import sys
-sys.path.append('C:\\Users\\slarson\\workspace\\OMNI\\target\\dependency\\')
-#print sys.path
-my_classpath = open('classpath.txt')
-classpath = my_classpath.read()
-paths = classpath.split(';')
-for path in paths:
-    sys.path.append(path)
-#print sys.path
 
-# doesn't seem to make any difference
-import os
-os.putenv("CLASSPATH",classpath)
-os.environ["CLASSPATH"] = classpath
-
-'''
 Desired algorithm:  Pull out two specific neuronal morphologies
 For each morphology, get all the end points.  
 For each endpoint, apply the position / rotation of the tangible. 
