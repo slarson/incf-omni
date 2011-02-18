@@ -6,34 +6,18 @@ tangible download
 
 Run via Jython
 @author: slarson
-'''
-# not sure if this is making any difference
-import sys
-sys.path.append('C:\\Users\\slarson\\workspace\\OMNI\\target\\dependency\\')
-#print sys.path
-my_classpath = open('classpath.txt')
-classpath = my_classpath.read()
-paths = classpath.split(';')
-for path in paths:
-    sys.path.append(path)
-#print sys.path
 
-# doesn't seem to make any difference
-import os
-os.putenv("CLASSPATH",classpath)
-os.environ["CLASSPATH"] = classpath
-
-'''
 Begin code doing actual work with WBC library
 '''
 from org.wholebrainproject.wbc.app import Application
 from org.wholebrainproject.wbc.data.importer import MorphMLImporter
 from org.wholebrainproject.wbc.tangible import NeuronMorphology
+from Numeric import *
 
 def loadMorphology ( uri_string ):
     app = Application()
     
-    app.setServerLocation("http://137.131.164.54:8182");
+    app.setServerLocation("http://data.wholebraincatalog.org");
     #get factory for producing tangibles
     factory = app.getTangibleFactory()
     #load by uri
@@ -69,6 +53,7 @@ http://data.wholebraincatalog.org/tangibles/cellinstances/dpkg6 -> 053110_1R_fli
 http://data.wholebraincatalog.org/tangibles/cellinstances/pgo54 -> 060710_1Rflip_N
 http://data.wholebraincatalog.org/tangibles/cellinstances/qjqcd -> 072010_1L_N
 '''
+'''
 uri_strings = ["http://137.131.164.54:8182/tangibles/cellinstances/yazvy",
 "http://137.131.164.54:8182/tangibles/cellinstances/nvjem",
 "http://137.131.164.54:8182/tangibles/cellinstances/tc1kk",
@@ -76,6 +61,8 @@ uri_strings = ["http://137.131.164.54:8182/tangibles/cellinstances/yazvy",
 "http://137.131.164.54:8182/tangibles/cellinstances/dpkg6",
 "http://137.131.164.54:8182/tangibles/cellinstances/pgo54",
 "http://137.131.164.54:8182/tangibles/cellinstances/qjqcd"]
+'''
+uri_strings = ["http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx"]
 
 #download and convert all forests upfront 
 # to avoid repetative network crunching

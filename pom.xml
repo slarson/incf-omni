@@ -9,6 +9,18 @@
 		<name>International Neuroinformatics Coordinating Facility</name>
 		<url>http://incf.org</url>
 	</organization>
+	<developers>
+		<developer>
+			<id>slarson</id>
+			<name>Stephen Larson</name>
+			<email>slarson@ncmir.ucsd.edu</email>
+			<organization>Whole Brain Project</organization>
+			<organizationUrl>www.wholebrainproject.org</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
 	<!--
 		This document is a "project object model" from the Maven2 build
 		management system (http://maven.apache.org). Please download Maven and
@@ -45,23 +57,23 @@
 		<dependency>
 			<groupId>org.wholebrainproject</groupId>
 			<artifactId>wbc-client</artifactId>
-			<version>0.7.7.14-SNAPSHOT</version>
+			<version>0.7.7.16-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wholebrainproject</groupId>
 			<artifactId>wbc-client-interface</artifactId>
-			<version>0.7.7.14-SNAPSHOT</version>
+			<version>0.7.7.16-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wholebrainproject</groupId>
 			<artifactId>wbc-io</artifactId>
-			<version>0.7.7.7-SNAPSHOT</version>
+			<version>0.7.7.9</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.wholebrainproject</groupId>
 			<artifactId>wbc-core</artifactId>
-			<version>0.7.7.16-SNAPSHOT</version>
+			<version>0.7.7.16</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
