@@ -2,11 +2,11 @@
 Originally reated on Nov 27, 2010
 Modified into a general example on Feb 18, 2011
 
-Export all non-endpoints from a neuron morphology stored in the Whole Brain Catalog.  Export these as x,y,z coordinates in a Python pickle file.  This is step one in a two step process to
-analyze the contents of a neuron morphology from the Whole Brain
- Catalog.  Step 2 will be to import the Python pickle file with 
-a pure Python script and work with it using NumPy and Matplotlib
-modules.
+Export all non-endpoints from a neuron morphology stored in the Whole Brain Catalog.  
+Export these as x,y,z coordinates in a Python pickle file.  This is step one in a 
+two step process to analyze the contents of a neuron morphology from the Whole Brain
+Catalog.  Step 2 will be to import the Python pickle file with a pure Python script 
+and work with it using NumPy and Matplotlib modules.
 
 Run via Jython
 @author: slarson
