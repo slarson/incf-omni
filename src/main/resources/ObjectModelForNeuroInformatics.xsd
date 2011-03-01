@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:meta="http://morphml.org/metadata/schema" xmlns="http://incf.org/omni"
+    targetNamespace="http://incf.org/omni">
+    <xs:annotation>
+        <xs:documentation>Defines an Object Model for Neuroinformatics.  A project of the International Neuroinformatics Coordinating Facility (http://incf.org).  author: Stephen Larson (stelar@alum.mit.edu)</xs:documentation>
+    </xs:annotation>
+
+    <xs:import namespace="http://morphml.org/metadata/schema"
+        schemaLocation="Level1/Metadata_v1.8.1.xsd"/>
+
+    <!-- DEFINE TANGIBLE STATE -->
+
+    <xs:complexType name="TangibleState">
+        <xs:annotation>
+            <xs:documentation>Top-level type for a thing that has a position, orientation, and scale within a coordinate system.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+
+            <xs:element maxOccurs="1" name="position" type="meta:Point3D">
+                <xs:annotation>
+                    <xs:documentation>Where it is in space, in absolute coordinates</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element maxOccurs="1" name="rotation" type="Quaternion"/>
+
+            <xs:element maxOccurs="1" name="scale" type="meta:Point3D"/>
+
+            <xs:element maxOccurs="1" minOccurs="0" name="color" type="Color"/>
+
+            <xs:element maxOccurs="1" minOccurs="0" name="groupId" type="xs:anyURI">
+                <xs:annotation>
+                    <xs:documentation>Specified the URI of the group this TangibleState is associated
+                        with. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+        </xs:sequence>
+
+        <xs:attribute name="semanticInstanceID" type="xs:anyURI" use="optional">
+            <xs:annotation>
+                <xs:documentation>URI of the ontology instance associated with this
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+
+        <xs:attribute name="name" type="xs:string" use="optional"/>
+
+        <xs:attribute name="id" type="xs:anyURI">
+            <xs:annotation>
+                <xs:documentation>URI of the tangible, unique within the document
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+
+    <!-- DEFINE A DATA TANGIBLE -->
+    <xs:complexType name="DataTangibleState">
+        <xs:annotation>
+            <xs:documentation>A TangibleState that includes a pointer to a DataWrapper</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="TangibleState">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="annotation" type="AnnotationType">
+                        <xs:annotation>
+                            <xs:documentation>Annotations made here will only apply to the
+                                individual TangibleState (instance)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="dataWrapperId" type="xs:anyURI">
+                        <xs:annotation>
+                            <xs:documentation>Specifies the id of a data item in the data item
+                                section</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+
+    <!-- Definition of a Slide follows. -->
+    <xs:complexType name="SlideState">
+        <xs:annotation>
+            <xs:documentation>A Panel in 3D space that displays an image
+                of a brain slice. Extends a DataTangibleState </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="DataTangibleState">
+                <xs:sequence>
+                    <xs:element name="ratio" type="xs:double"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Definition of a MeshModelState follows. -->
+    <xs:complexType name="MeshModelState">
+        <xs:annotation>
+            <xs:documentation> Describes a geometry from a polygonal mesh. Extends an DataTangibleState
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="DataTangibleState"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CellInstanceState">
+        <xs:annotation>
+            <xs:documentation>Describes the instantiation of a particular neuron morphology. An instance is a particular copy
+                of a neuron, most likely described by its Level3Cell MorphML representation.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:complexContent>
+
+            <xs:extension base="DataTangibleState">
+
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="TimeSeriesAssociation" type="xs:anyURI">
+                        <xs:annotation>
+                            <xs:documentation> Provides this cell instance an association to a time
+                                series.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+
+                    <xs:element minOccurs="0" name="fiberID" type="xs:anyURI" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>URI of the contents of the control path that describes
+                                its axon FiberState </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BrainRegionState">
+        <xs:annotation>
+            <xs:documentation> Describes a Brain Region. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="DataTangibleState">
+                <xs:sequence>
+                    <xs:element name="abbreviation" type="xs:string"/>
+                    <xs:element name="parentAbbreviation" minOccurs="0" type="xs:string"/>
+                    <xs:element name="allenRegionId" minOccurs="0" type="xs:int"/>
+                </xs:sequence>
+
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FiberState">
+        <xs:annotation>
+            <xs:documentation> Describes a fiber, which could be the extended axon of a
+                CellInstanceState or could be a fiber tract taken from DTI data. Will be most often
+                associated with a DataWrapper that contains a Level3Cell representation of the
+                segments and cable of the Fiber. </xs:documentation>
+        </xs:annotation>
+
+        <xs:complexContent>
+
+            <xs:extension base="DataTangibleState"/>
+
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Quaternion">
+        <xs:annotation>
+            <xs:documentation> Defines a Quaternion representing rotation (http://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation)</xs:documentation>
+        </xs:annotation>
+
+        <xs:attribute name="x" type="xs:double" use="required"/>
+        <xs:attribute name="y" type="xs:double" use="required"/>
+        <xs:attribute name="z" type="xs:double" use="required"/>
+        <xs:attribute name="w" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="Color">
+        <xs:annotation>
+            <xs:documentation>Defines an RGB color with ints from 0-255</xs:documentation>
+        </xs:annotation>
+
+        <xs:attribute name="r" type="xs:int" use="required"/>
+        <xs:attribute name="g" type="xs:int" use="required"/>
+        <xs:attribute name="b" type="xs:int" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="DataWrapper">
+        <xs:annotation>
+            <xs:documentation>Metadata describing a data item. Note that this is intended to
+                describe some kind of complex data that is generally external to the system.
+                DataWrappers can be associated with a tangible in order to appear within a
+                particular place in the Whole Brain Catalog</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+
+            <xs:choice>
+                <xs:annotation>
+                    <xs:documentation>Choose between assigning a simple URL location, a web service
+                        location, or embedding the content in a content tag</xs:documentation>
+                </xs:annotation>
+                <xs:element name="location" type="xs:anyURI">
+                    <xs:annotation>
+                        <xs:documentation>A URI location, which may vary depending on the data
+                            type</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="webServiceLocation">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="hostName" type="xs:string" minOccurs="1" maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation>A host name for the service, e.g.
+                                        132.239.131.188 </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="serviceName" type="xs:string" minOccurs="1"
+                                maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation>A service name at the host, e.g. abasagittal.
+                                        Currently we seem to use one service name per image.
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ccdbLocation">
+                    <xs:annotation>
+                        <xs:documentation> Location of a data file that resides on the Cell Centered
+                            database (http://ccdb.ucsd.edu) </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="MPID" minOccurs="1" maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation>The Microscopy Product ID from the Cell
+                                        centered database</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element type="xs:string" name="DataID" minOccurs="1" maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation>References a specific data item within an MPID
+                                        record in the CCDB</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="content">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:any/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+
+
+            <xs:element name="alternateDataLocation" type="xs:anyURI" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The URL to an alternative source of the data. This may be an
+                        optimized version of the original data. often used for binary versions of
+                        the same file. There is no SHA1 for this file.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="annotation" type="AnnotationType" minOccurs="0" maxOccurs="unbounded"/>
+
+            <xs:element name="sha1" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>This is an optional SHA-1 message digest on the file
+                        referenced in this data wrapper, specified by 'Location'. It is used to
+                        support client caching of data files by ensuring the cached version matches
+                        the current server version. The SHA-1 value is 40 hex characters.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:length value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="type" type="xs:Name" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation> The type of data that will be found at the location.
+                        Importers declare types. This element may go away... </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="semanticClassID" type="xs:anyURI" use="optional">
+            <xs:annotation>
+                <xs:documentation> This a resolvable URL to RDF content for the class of this
+                    Tangible. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+
+        <xs:attribute name="id" type="xs:anyURI"/>
+
+    </xs:complexType>
+
+    <xs:complexType name="AnnotationType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="annotation">
+                <xs:annotation>
+                    <xs:documentation>To allow users to tag parts of Tangibles with
+                        notes</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="annotationContent" type="xs:string"/>
+                        <xs:element name="annotationName" type="xs:string"/>
+                        <xs:element name="annotationReferent">
+                            <xs:annotation>
+                                <xs:documentation>The referent is the part of some kind of data that
+                                    the annotationContent is referring to.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:choice>
+                                    <xs:element name="cableId" type="xs:int">
+                                        <xs:annotation>
+                                            <xs:documentation> An ID from a MorphML cell
+                                                cable</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="segmentId" type="xs:int">
+                                        <xs:annotation>
+                                            <xs:documentation>An ID from a MorphML cell
+                                                segment</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="region">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="point" type="meta:Point3D"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:choice>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:any minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation> This is to put other kinds of XML content in here
+                                    like an RDF representation of an OWL Instance. For example:
+                                    &lt; owl:Thing rdf:about="#my_special_individual"&gt;
+                                    &lt;rdf:type rdf:resource="#My_Special_Class"/&gt;
+                                    &lt;/owl:Thing&gt; </xs:documentation>
+                            </xs:annotation>
+                        </xs:any>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TimeSeriesSet">
+        <xs:annotation>
+            <xs:documentation>Defines a set of time series elements that can be used with NeuroML
+                files to define a time series for each segment within a MorphML file. More
+                information is available online at
+                http://wiki.wholebraincatalog.org/wiki/Time_Series_Format</xs:documentation>
+        </xs:annotation>
+
+        <xs:choice>
+            <xs:annotation>
+                <xs:documentation>We either have a set of times and voltage elements, or we have a
+                    spikeTimes element, but not both</xs:documentation>
+            </xs:annotation>
+            <xs:sequence>
+                <xs:element name="times" type="xs:string" minOccurs="1" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>A comma separated set of strings that contain floats which
+                            define the time points. There should be as many items in this list as
+                            the voltageSeries list.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="voltages" minOccurs="1" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>A comma separated set of strings that contain floats which
+                            define the voltage values at each corresponding time point in the times
+                            tag. There should be as many items in this list as in the times
+                            list.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="segmentId" type="xs:string" use="optional">
+                                    <xs:annotation>
+                                        <xs:documentation>The NeuroML (http://neuroml.org) segment id for where the time
+                                            series data belongs</xs:documentation>
+                                    </xs:annotation>
+                                </xs:attribute>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:element name="spikeTimes" type="xs:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation> A comma seperated list of integers that represent the number
+                        of milliseconds till spike time. the neuron spikes </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+        <xs:attribute name="cellName" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>An optional name to give this time series.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="id" type="xs:anyURI" use="optional">
+            <xs:annotation>
+                <xs:documentation>The unique URI that defines this time series. This is optional
+                    because data may not originally have a URI and require that one be
+                    provided.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+</xs:schema>

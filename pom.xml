@@ -29,6 +29,43 @@
 	-->
 	<build>
 		<plugins>
+		
+		<!--
+				In order to understand when these plugins operate, you should look
+				into the lifecycle reference:
+				http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference
+			-->
+
+			<!--
+				This is the hyperjaxb3 plugin. During an install, this plugin is
+				responsible for finding the XSDs in the resources directory and
+				converting them into generated java classes
+			-->
+			<plugin>
+				<!-- defines what plugin you are using -->
+				<groupId>org.jvnet.hyperjaxb3</groupId>
+				<artifactId>maven-hyperjaxb3-plugin
+				</artifactId>
+				<version>0.5.4</version>
+				<!--
+					defines at what point in the "maven build lifecycle" this plugin
+					should be run. Learning about maven lifecycles is a critical
+					concept for understanding how it works
+				-->
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<extension>true</extension>
+					<persistenceUnitName>omni</persistenceUnitName>
+					<!--<roundtripTestClassName>RoundtripTest</roundtripTestClassName>-->
+					<!-- <catalog>${basedir}/catalog.xml</catalog>-->
+				</configuration>
+			</plugin>
 			<plugin>
 				<!--
 					This goal will force Maven to build all included POMs up to the
