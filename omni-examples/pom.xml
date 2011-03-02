@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.incf</groupId>
+	<artifactId>omni-examples</artifactId>
+	<name>INCF Object Model for Neuroinformatics</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<organization>
+		<name>International Neuroinformatics Coordinating Facility</name>
+		<url>http://incf.org</url>
+	</organization>
+	<url>http://incf-omni.googlecode.com</url>
+	<developers>
+		<developer>
+			<id>slarson</id>
+			<name>Stephen Larson</name>
+			<email>slarson@ncmir.ucsd.edu</email>
+			<organization>Whole Brain Project</organization>
+			<organizationUrl>www.wholebrainproject.org</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+	<!--
+		This document is a "project object model" from the Maven2 build
+		management system (http://maven.apache.org). Please download Maven and
+		run "mvn clean install" in the directory where this file lives to get
+		started.
+	-->
+	<build>
+		<plugins>
+
+			<!--
+				In order to understand when these plugins operate, you should look
+				into the lifecycle reference:
+				http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference
+			-->
+
+			<plugin>
+				<inherited>true</inherited>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<!--
+					This goal will force Maven to build all included POMs up to the
+					package phase BEFORE the assembly is processed.
+				-->
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2-beta-2</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>assembly</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/descriptor-1-jar-with-dep.xml
+						</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.wholebrainproject</groupId>
+			<artifactId>wbc-client</artifactId>
+			<version>0.7.7.16-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.wholebrainproject</groupId>
+			<artifactId>wbc-client-interface</artifactId>
+			<version>0.7.7.16-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.wholebrainproject</groupId>
+			<artifactId>wbc-io</artifactId>
+			<version>0.7.7.9</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.wholebrainproject</groupId>
+			<artifactId>wbc-core</artifactId>
+			<version>0.7.7.16</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jnumerical</groupId>
+			<artifactId>jnumeric</artifactId>
+			<version>2.5.1_ra0.1</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>openccdb-public</id>
+			<url>http://openccdb.org:8081/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>openccdb-snapshot</id>
+			<url>http://openccdb.org:8081/nexus/content/groups/public-snapshots
+			</url>
+		</repository>
+		<repository>
+			<id>openccdb-thirdparty</id>
+			<url>http://openccdb.org:8081/nexus/content/repositories/thirdparty
+			</url>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Internal Releases</name>
+			<url>http://openccdb.org:8081/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Internal Snapshots</name>
+			<url>http://openccdb.org:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>

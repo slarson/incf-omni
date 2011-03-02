@@ -2,13 +2,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.incf</groupId>
-	<artifactId>omni</artifactId>
-	<name>INCF Object Model for Neuroinformatics</name>
+	<artifactId>omni-core</artifactId>
+	<name>INCF Object Model for Neuroinformatics Core</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<organization>
 		<name>International Neuroinformatics Coordinating Facility</name>
 		<url>http://incf.org</url>
 	</organization>
+	<description>The core abstract object model as defined in XML Schema.</description>
+	<url>http://incf-omni.googlecode.com</url>
 	<developers>
 		<developer>
 			<id>slarson</id>
@@ -29,12 +31,21 @@
 	-->
 	<build>
 		<plugins>
-		
-		<!--
+
+			<!--
 				In order to understand when these plugins operate, you should look
 				into the lifecycle reference:
 				http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference
 			-->
+
+			<plugin>
+				<inherited>true</inherited>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
 
 			<!--
 				This is the hyperjaxb3 plugin. During an install, this plugin is
@@ -66,58 +77,60 @@
 					<!-- <catalog>${basedir}/catalog.xml</catalog>-->
 				</configuration>
 			</plugin>
-			<plugin>
-				<!--
-					This goal will force Maven to build all included POMs up to the
-					package phase BEFORE the assembly is processed.
-				-->
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2-beta-2</version>
-				<executions>
-					<execution>
-						<phase>install</phase>
-						<goals>
-							<goal>assembly</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/descriptor-1-jar-with-dep.xml
-						</descriptor>
-					</descriptors>
-				</configuration>
-			</plugin>
+
 		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>org.wholebrainproject</groupId>
-			<artifactId>wbc-client</artifactId>
-			<version>0.7.7.16-SNAPSHOT</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.wholebrainproject</groupId>
-			<artifactId>wbc-client-interface</artifactId>
-			<version>0.7.7.16-SNAPSHOT</version>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.wholebrainproject</groupId>
-			<artifactId>wbc-io</artifactId>
-			<version>0.7.7.9</version>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>ejb3-persistence</artifactId>
+			<version>1.0.2.GA</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.wholebrainproject</groupId>
-			<artifactId>wbc-core</artifactId>
-			<version>0.7.7.16</version>
-			<type>jar</type>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.0.b2</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.jnumerical</groupId>
-			<artifactId>jnumeric</artifactId>
-			<version>2.5.1_ra0.1</version>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>runtime</artifactId>
+			<version>0.4.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
+			<version>0.5.4</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 	<repositories>
@@ -136,4 +149,16 @@
 			</url>
 		</repository>
 	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Internal Releases</name>
+			<url>http://openccdb.org:8081/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Internal Snapshots</name>
+			<url>http://openccdb.org:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>

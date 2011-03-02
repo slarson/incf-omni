@@ -7,7 +7,7 @@
     </xs:annotation>
 
     <xs:import namespace="http://morphml.org/metadata/schema"
-        schemaLocation="Level1/Metadata_v1.8.1.xsd"/>
+        schemaLocation="neuroml/Level1/Metadata_v1.8.1.xsd"/>
 
     <!-- DEFINE TANGIBLE STATE -->
 
