@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:meta="http://morphml.org/metadata/schema" xmlns="http://incf.org/omni"
+    xmlns="http://incf.org/omni"
     targetNamespace="http://incf.org/omni">
     <xs:annotation>
         <xs:documentation>Defines an Object Model for Neuroinformatics.  A project of the International Neuroinformatics Coordinating Facility (http://incf.org).  author: Stephen Larson (stelar@alum.mit.edu)</xs:documentation>
     </xs:annotation>
 
-    <xs:import namespace="http://morphml.org/metadata/schema"
-        schemaLocation="neuroml/Level1/Metadata_v1.8.1.xsd"/>
 
     <!-- DEFINE TANGIBLE STATE -->
 
@@ -18,7 +16,7 @@
         </xs:annotation>
         <xs:sequence>
 
-            <xs:element maxOccurs="1" name="position" type="meta:Point3D">
+            <xs:element maxOccurs="1" name="position" type="Point3D">
                 <xs:annotation>
                     <xs:documentation>Where it is in space, in absolute coordinates</xs:documentation>
                 </xs:annotation>
@@ -26,7 +24,7 @@
 
             <xs:element maxOccurs="1" name="rotation" type="Quaternion"/>
 
-            <xs:element maxOccurs="1" name="scale" type="meta:Point3D"/>
+            <xs:element maxOccurs="1" name="scale" type="Point3D"/>
 
             <xs:element maxOccurs="1" minOccurs="0" name="color" type="Color"/>
 
@@ -180,6 +178,20 @@
         <xs:attribute name="y" type="xs:double" use="required"/>
         <xs:attribute name="z" type="xs:double" use="required"/>
         <xs:attribute name="w" type="xs:double" use="required"/>
+    </xs:complexType>
+    
+    
+    <!-- Definition of a Point follows. -->
+    <xs:complexType name="Point3D">
+        <xs:annotation>
+            <xs:documentation>A 3D point with no diameter. Note: the units for these values
+                        will be specified in the file in which the element is used, e.g.
+            in a MorphML file with &lt;b&gt;length_units="micrometer"&lt;/b&gt; in the morphml element. Assume micrometer
+            if no other units are given.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="x" type="xs:double" use="required"/>
+        <xs:attribute name="y" type="xs:double" use="required"/>
+        <xs:attribute name="z" type="xs:double" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="Color">
@@ -341,7 +353,7 @@
                                     <xs:element name="region">
                                         <xs:complexType>
                                             <xs:sequence>
-                                                <xs:element name="point" type="meta:Point3D"/>
+                                                <xs:element name="point" type="Point3D"/>
                                             </xs:sequence>
                                         </xs:complexType>
                                     </xs:element>
