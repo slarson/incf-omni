@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+           attributeFormDefault="unqualified" 
+           elementFormDefault="qualified" 
+           xmlns:carmenData="http://www.carmen.org.uk"
+           targetNamespace="http://www.carmen.org.uk" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ndtfDataCfg">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Version" type="xs:string" />
+        <xs:element name="NdtfDataID" type="xs:string" />
+        <xs:element name="GeneralInfo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:choice maxOccurs="7">
+              <xs:element  name="Description" type="xs:string" />
+              <xs:element minOccurs="0" name="Laboratory" type="xs:string" />
+              <xs:element minOccurs="0" name="Investigator" type="xs:string" />
+              <xs:element minOccurs="0" name="SpecimenID" type="xs:string" />
+              <xs:element name="CreateDate" type="xs:date" />
+              <xs:element name="CreateTime" type="xs:time" />
+              <xs:element minOccurs="0" name="RecordID" type="xs:string" />
+              </xs:choice>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DataSet">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:choice  minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="ImageData" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="Location" type="xs:anyURI" />
+                    <xs:element name="DataInfo">
+                      <xs:complexType>
+                        <xs:sequence>
+                         <xs:choice  maxOccurs="4">
+                          <xs:element minOccurs="0"  name="AcquisitionEquipment" type="xs:string" />
+                          <xs:element minOccurs="0"  name="EquipmentSettings" type="xs:string" />
+                          <xs:element name="StartDateTime">
+                            <xs:complexType>
+                              <xs:attribute name="dateTime" type="xs:dateTime" use="required" />
+                              <xs:attribute name="decimalSeconds" type="xs:decimal" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="EndDateTime" minOccurs="0">
+                            <xs:complexType>
+                              <xs:attribute name="dateTime" type="xs:dateTime" use="required" />
+                              <xs:attribute name="decimalSeconds" type="xs:decimal" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                         </xs:choice>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Dimension">
+                      <xs:complexType>
+                        <xs:attribute name="width"  type="xs:unsignedInt" use="required" />
+                        <xs:attribute name="height" type="xs:unsignedInt" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="FrameInfo">
+                      <xs:complexType>
+                        <xs:attribute name="frameCnt"  type="xs:unsignedInt" use="required" />
+                        <xs:attribute name="frameRate" type="xs:decimal" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" ref="carmenData:ExtraParams" />
+                    <xs:element minOccurs="0" name="RecommendedApp" type="xs:string" />     
+                  </xs:sequence>  
+                 <xs:attribute name="filename" type="xs:string" use="required" /> 
+                 <xs:attribute name="memberID" type="xs:integer" />            
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="TimeSeriesData" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="Location" type="xs:anyURI" />
+                    <xs:element name="DataInfo">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:choice minOccurs="5" maxOccurs="13">
+                          <xs:element minOccurs="0"  name="AcquisitionEquipment" type="xs:string" />
+                          <xs:element  minOccurs="0"  name="EquipmentSettings" type="xs:string" />
+                          <xs:element name="StartDateTime" minOccurs="1" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:attribute name="dateTime"  type="xs:dateTime" use="required" />
+                              <xs:attribute name="decimalSeconds" type="xs:decimal" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="EndDateTime" minOccurs="0">
+                            <xs:complexType>
+                              <xs:attribute name="dateTime"  type="xs:dateTime" use="required" />
+                              <xs:attribute name="decimalSeconds" type="xs:decimal" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="NumberOfChannels"  type="xs:unsignedShort" minOccurs="1" maxOccurs="1" />
+                          <xs:element name="ItemCount" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+                          <xs:element name="SamplingRate"   type="xs:decimal" minOccurs="1" maxOccurs="1"/>
+                          <xs:element minOccurs="0" name="TransducerType" type="xs:string" />
+                          <xs:element ref="carmenData:ADCSettings" minOccurs="0" />
+                          <xs:element ref="carmenData:LowPassFilter" minOccurs="0"/>
+                          <xs:element ref="carmenData:HighPassFilter" minOccurs="0"/>
+                          <xs:element name="ChannelLabels" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="PositionList" type="xs:string" minOccurs="0"/>
+                          </xs:choice>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="StructInfo">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="carmenData:MatElementLabels"/>
+                          <xs:element  minOccurs="0" maxOccurs="unbounded" ref="carmenData:ChildrenFiles" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="ExtraInfo" >
+                      <xs:complexType>
+                        <xs:sequence> 
+                          <xs:element minOccurs="1" maxOccurs="unbounded" name="InfoText">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute name="elementID" type="xs:integer" use="required" />
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType> 
+                    </xs:element>
+                    <xs:element minOccurs="0" ref="carmenData:ExtraParams" />
+                    <xs:element minOccurs="0" name="RecommendedApp" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="filename" type="xs:string" use="required" />
+                  <xs:attribute name="unit"     type="xs:string" use="required" />
+                  <xs:attribute name="memberID" type="xs:integer" /> 
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="SegmentData" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                   <xs:element minOccurs="0" name="Location" type="xs:anyURI" />
+                    <xs:element name="DataInfo">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:choice maxOccurs="14" minOccurs="5">
+                            <xs:element minOccurs="0" name="AcquisitionEquipment" type="xs:string"/>
+                            <xs:element minOccurs="0" name="EquipmentSettings" type="xs:string"/>
+                            <xs:element name="StartDateTime" minOccurs="1" maxOccurs="1">
+                              <xs:complexType>
+                                <xs:attribute name="dateTime" type="xs:dateTime" use="required"/>
+                                <xs:attribute name="decimalSeconds" type="xs:decimal" use="required"/>
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element name="EndDateTime" minOccurs="0">
+                              <xs:complexType>
+                                <xs:attribute name="dateTime" type="xs:dateTime" use="required"/>
+                                <xs:attribute name="decimalSeconds" type="xs:decimal" use="required"/>
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element name="NumberOfChannels" type="xs:unsignedShort" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="ItemCount" type="xs:string" minOccurs="1" maxOccurs="1" />
+                            <xs:element name="SamplingRate" type="xs:decimal" minOccurs="1" maxOccurs="1"/>
+                            <xs:element minOccurs="0" name="TransducerType" type="xs:string"/>
+                            <xs:element ref="carmenData:ADCSettings" minOccurs="0" />
+                            <xs:element ref="carmenData:LowPassFilter" minOccurs="0" />
+                            <xs:element ref="carmenData:HighPassFilter" minOccurs="0"/>
+                            <xs:element name="Trigger" minOccurs="0">
+                              <xs:complexType>
+                                <xs:attribute name="triggerType" type="xs:integer" use="required"/>
+                                <xs:attribute name="threshold" type="xs:decimal" use="required"/>
+                                <xs:attribute name="leftSpan" type="xs:decimal" use="required"/>
+                                <xs:attribute name="rightSpan" type="xs:decimal" use="required"/>
+                              </xs:complexType>
+                            </xs:element>      
+                            <xs:element name="ChannelLabels" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="PositionList" type="xs:string" minOccurs="0"/>
+                          </xs:choice>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="StructInfo">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="carmenData:MatElementLabels"/>
+                          <xs:element minOccurs="0" maxOccurs="unbounded" ref="carmenData:ChildrenFiles" />         
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" ref="carmenData:ExtraInfo" />
+                    <xs:element minOccurs="0" ref="carmenData:ExtraParams" />
+                    <xs:element minOccurs="0" name="RecommendedApp" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="filename" type="xs:string" use="required" />
+                  <xs:attribute name="unit"     type="xs:string" use="required" />
+                  <xs:attribute name="memberID" type="xs:integer" /> 
+                  <xs:attribute name="fixedLength" type="xs:boolean" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="NeuralEventData" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                   <xs:element minOccurs="0" name="Location" type="xs:anyURI" />
+                    <xs:element name="DataInfo">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:choice minOccurs="5" maxOccurs="13">
+                          <xs:element minOccurs="0" name="AcquisitionEquipment" type="xs:string" />
+                          <xs:element minOccurs="0" name="EquipmentSettings" type="xs:string" />
+                          <xs:element name="StartDateTime" minOccurs="1" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:attribute name="dateTime"  type="xs:dateTime" use="required" />
+                              <xs:attribute name="decimalSeconds" type="xs:decimal"  use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="EndDateTime" minOccurs="0">
+                            <xs:complexType>
+                              <xs:attribute name="dateTime" type="xs:dateTime" use="required" />
+                              <xs:attribute name="decimalSeconds" type="xs:decimal" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="NumberOfChannels" type="xs:unsignedShort" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="ItemCount" type="xs:string" minOccurs="1" maxOccurs="1" />
+                          <xs:element name="SamplingRate"  type="xs:decimal" minOccurs="1" maxOccurs="1"/>
+                          <xs:element minOccurs="0" name="TransducerType" type="xs:string" />
+                          <xs:element ref="carmenData:ADCSettings" minOccurs="0" />
+                          <xs:element ref="carmenData:LowPassFilter" minOccurs="0" />
+                          <xs:element ref="carmenData:HighPassFilter" minOccurs="0" />
+                          <xs:element name="ChannelLabels" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="PositionList" type="xs:string" minOccurs="0"/>
+                          </xs:choice>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="StructInfo">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="carmenData:MatElementLabels" />
+                          <xs:element minOccurs="0" maxOccurs="unbounded" ref="carmenData:ChildrenFiles" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" ref="carmenData:ExtraInfo" />
+                    <xs:element minOccurs="0" ref="carmenData:ExtraParams" />
+                    <xs:element minOccurs="0" name="RecommendedApp" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="filename" type="xs:string" use="required" />
+                  <xs:attribute name="timeResolution" type="xs:decimal" use="required" />
+                  <xs:attribute name="memberID" type="xs:integer" /> 
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ExperimentalEventData" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                     <xs:element minOccurs="0" name="Location" type="xs:anyURI" />
+                     <xs:element minOccurs="0" name="BinaryEventData" >
+                      <xs:complexType>
+                      <xs:sequence>
+                       <xs:element name="StartDateTime" minOccurs="1" maxOccurs="1" >
+                         <xs:complexType>
+                          <xs:attribute name="dateTime"  type="xs:dateTime" use="required" />
+                          <xs:attribute name="decimalSeconds" type="xs:decimal" use="required" />
+                         </xs:complexType>
+                       </xs:element>
+                       <xs:element name="NumberOfChannels" type="xs:unsignedShort" minOccurs="1" maxOccurs="1"/>
+                       <xs:element name="ItemCount" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                       <xs:element name="ChannelLabels" type="xs:string" minOccurs="1" maxOccurs="1" />
+                       <xs:element name="MatElementLabels" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                       <xs:element minOccurs="0" maxOccurs="unbounded" ref="carmenData:ChildrenFiles" />
+                     </xs:sequence>
+                     </xs:complexType>
+                    </xs:element>
+                     <xs:element minOccurs="0" name="ExtraInfo" >
+                      <xs:complexType>
+                        <xs:sequence> 
+                          <xs:element minOccurs="1" maxOccurs="unbounded" name="InfoText">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                 <xs:attribute name="elementID" type="xs:integer" use="required" />
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType> 
+                     </xs:element>
+                  </xs:sequence>
+                   <xs:attribute name="recordType" type="xs:string" use="required"/>
+                   <xs:attribute name="filename" type="xs:string" use="required" />
+                   <xs:attribute name="timeResolution" type="xs:decimal" use="required" />
+                   <xs:attribute name="memberID" type="xs:integer" /> 
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="GenericMatrix" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="Location" type="xs:anyURI" />
+                    <xs:element name="DataName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="MatLabel" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element  name="AppDefinedDataInfo" >
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:any    processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="filename" type="xs:string" use="required" />
+                  <xs:attribute name="applicationID" type="xs:string" use="required" />
+                  <xs:attribute name="unit" type="xs:string" />
+                  <xs:attribute name="memberID" type="xs:integer" /> 
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="UserDefinedData" minOccurs="0" maxOccurs="unbounded">
+                 <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="Location" type="xs:anyURI" />
+                    <xs:element name="DataInfo" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:choice maxOccurs="12">
+                          <xs:element minOccurs="0" name="AcquisitionEquipment" type="xs:string" />
+                          <xs:element minOccurs="0" name="EquipmentSettings" type="xs:string" />
+                          <xs:element name="StartDateTime" >
+                            <xs:complexType>
+                              <xs:attribute name="dateTime" type="xs:dateTime" use="required" />
+                              <xs:attribute name="decimalSeconds" type="xs:decimal" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="EndDateTime" minOccurs="0">
+                            <xs:complexType>
+                              <xs:attribute name="dateTime" type="xs:dateTime" use="required" />
+                              <xs:attribute name="decimalSeconds" type="xs:decimal" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="NumberOfChannels" type="xs:unsignedShort"  minOccurs="0"/>
+                          <xs:element name="SamplingRate" type="xs:decimal"  minOccurs="0"/>
+                          <xs:element minOccurs="0" name="TransducerType" type="xs:string" />
+                          <xs:element ref="carmenData:ADCSettings" minOccurs="0"/>
+                          <xs:element ref="carmenData:LowPassFilter" minOccurs="0"/>
+                          <xs:element ref="carmenData:HighPassFilter" minOccurs="0"/>
+                          <xs:element name="ChannelLabels" type="xs:string"  minOccurs="0"/>
+                          <xs:element name="PositionList" type="xs:string" minOccurs="0"/>
+                          </xs:choice>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" ref="carmenData:ExtraInfo" />
+                    <xs:element minOccurs="0" ref="carmenData:ExtraParams" />
+                    <xs:element minOccurs="1" name="RecommendedApp" type="xs:string" />
+                    <xs:element  name="UserInfo" >
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:any    processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="filename" type="xs:string" use="required" />
+                  <xs:attribute name="applicationID" type="xs:string" />
+                  <xs:attribute name="unit" type="xs:string" />
+                  <xs:attribute name="memberID" type="xs:integer" /> 
+                </xs:complexType>
+              </xs:element>
+              </xs:choice>   
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="History"  minOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Processor" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:choice maxOccurs="3">
+                    <xs:element name="ProcessingDateTime">
+                      <xs:complexType>
+                        <xs:attribute name="StartDateTime" type="xs:dateTime" use="required" />
+                        <xs:attribute name="EndDateTime"   type="xs:dateTime" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="CommandLine" type="xs:string"  minOccurs="0"/>
+                    <xs:element name="ProcessingSettings" type="xs:string"  minOccurs="0"/>
+                    </xs:choice>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ChildrenFiles">
+   <xs:complexType>
+    <xs:sequence> 
+     <xs:element minOccurs="1" maxOccurs="unbounded" name="File">
+      <xs:complexType>
+       <xs:simpleContent>
+        <xs:extension base="xs:anyURI">
+         <xs:attribute name="startIndex" type="xs:integer" use="required" />
+         <xs:attribute name="itemCount"  type="xs:integer" use="required" />
+         <xs:attribute name="startTime"  type="xs:decimal" use="required" />
+         <xs:attribute name="endTime"    type="xs:decimal" use="required" />
+         <xs:attribute name="filename"   type="xs:string" use="required"  /> 
+        </xs:extension>
+       </xs:simpleContent>
+      </xs:complexType>
+     </xs:element>
+    </xs:sequence>
+   <xs:attribute name="elementID" type="xs:integer"  use="required" /> 
+
+  </xs:complexType>
+ </xs:element>  
+
+ <xs:element name="ExtraParams" >
+  <xs:complexType> 
+   <xs:sequence>
+    <xs:element minOccurs="1" maxOccurs="unbounded" name="Params">
+     <xs:complexType>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="value" type="xs:decimal" use="required" />
+      <xs:attribute name="unit" type="xs:string" />
+     </xs:complexType>
+    </xs:element>
+   </xs:sequence>
+  </xs:complexType> 
+ </xs:element>
+                  
+<xs:element name="ExtraInfo" >
+ <xs:complexType>
+  <xs:sequence> 
+   <xs:element minOccurs="1" maxOccurs="unbounded" name="InfoText">
+    <xs:complexType>
+     <xs:simpleContent>
+      <xs:extension base="xs:string">
+       <xs:attribute name="elementID" type="xs:integer" use="required" />
+       <xs:attribute name="sourceID" type="xs:nonNegativeInteger" />
+       <xs:attribute name="sortedID" type="xs:nonNegativeInteger"  />
+      </xs:extension>
+     </xs:simpleContent>
+    </xs:complexType>
+   </xs:element>
+  </xs:sequence>
+ </xs:complexType> 
+</xs:element>
+
+
+ <xs:element name="MatElementLabels">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute name="timeOffset" type="xs:decimal" use="required" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+
+ <xs:element name="ADCSettings" >
+  <xs:complexType>
+   <xs:attribute name="precision"  type="xs:decimal" use="required" />
+   <xs:attribute name="zeroOffset" type="xs:decimal" use="required" />
+   <xs:attribute name="resolution" type="xs:decimal" use="required" />
+   <xs:attribute name="unit" type="xs:string" use="required" />
+  </xs:complexType>
+ </xs:element>
+                         
+ <xs:element name="LowPassFilter" >
+  <xs:complexType>
+   <xs:attribute name="cutoffFrequency" type="xs:decimal" use="required" />
+   <xs:attribute name="filterType"     type="xs:string" />
+   <xs:attribute name="order"          type="xs:unsignedShort" />
+  </xs:complexType>
+ </xs:element>
+
+ <xs:element name="HighPassFilter">
+  <xs:complexType>
+   <xs:attribute name="cutoffFrequency" type="xs:decimal" use="required" />
+   <xs:attribute name="filterType"     type="xs:string"  />
+   <xs:attribute name="order"           type="xs:unsignedShort"  />
+  </xs:complexType>
+ </xs:element>    
+
+</xs:schema>

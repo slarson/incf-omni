@@ -75,6 +75,12 @@
                                 section</xs:documentation>
                         </xs:annotation>
                     </xs:element>
+                    <xs:element minOccurs="0" maxOccurs="1" name="TimeSeriesAssociation" type="xs:anyURI">
+                        <xs:annotation>
+                            <xs:documentation>Provides this data tangible an association to a time
+                                series.  This returned document should conform to the TimeSeriesSet schema</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -120,12 +126,6 @@
             <xs:extension base="DataTangibleState">
 
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="TimeSeriesAssociation" type="xs:anyURI">
-                        <xs:annotation>
-                            <xs:documentation> Provides this cell instance an association to a time
-                                series.</xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
 
                     <xs:element minOccurs="0" name="fiberID" type="xs:anyURI" maxOccurs="1">
                         <xs:annotation>
@@ -133,6 +133,7 @@
                                 its axon FiberState </xs:documentation>
                         </xs:annotation>
                     </xs:element>
+                    
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

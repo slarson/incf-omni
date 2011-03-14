@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+           attributeFormDefault="unqualified" 
+           elementFormDefault="qualified" 
+           xmlns:eventMarker="http://www.carmen.org.uk" 
+           targetNamespace="http://www.carmen.org.uk" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="NDTF_Annotation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="version" type="xs:decimal" />
+        <xs:element name="description" type="xs:string" />
+        <xs:element name="timeMarker" type="xs:boolean" />
+        <xs:element name="timeResolution" type="xs:decimal" minOccurs="0"/>
+        <xs:element minOccurs="0" name="groupInfo" >
+         <xs:complexType>
+          <xs:sequence> 
+           <xs:element minOccurs="1" maxOccurs="unbounded" name="group">
+            <xs:complexType>
+             <xs:simpleContent>
+              <xs:extension base="xs:string">
+               <xs:attribute name="id" type="xs:integer" use="required" />
+              </xs:extension>
+             </xs:simpleContent>
+            </xs:complexType>
+           </xs:element>
+          </xs:sequence>
+         </xs:complexType> 
+        </xs:element>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element minOccurs="0" 
+                      maxOccurs="unbounded" name="eventNote">
+            <xs:complexType>
+              <xs:simpleContent>
+                <xs:extension base="xs:string">
+                  <xs:attribute name="timeOffset" 
+                                type="xs:decimal" use="required" />
+                  <xs:attribute name="attachedFile" type="xs:string" />
+                  <xs:attribute name="application" type="xs:string" />
+                  <xs:attribute name="group_id" type="xs:string" />
+                </xs:extension>
+              </xs:simpleContent>
+            </xs:complexType>
+          </xs:element>
+
+          <xs:element minOccurs="0" 
+                      maxOccurs="unbounded" name="interval">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="2" 
+                            maxOccurs="2" name="eventNote">
+                  <xs:complexType>
+                    <xs:simpleContent>
+                      <xs:extension base="xs:string">
+                        <xs:attribute name="timeOffset" 
+                                      type="xs:decimal" 
+                                      use="required" />
+                        <xs:attribute name="attachedFile" 
+                                      type="xs:string" />
+                        <xs:attribute name="application" 
+                                      type="xs:string" />
+                      </xs:extension>
+                    </xs:simpleContent>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute name="group_id" type="xs:string" />
+            </xs:complexType>
+          </xs:element>
+
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
