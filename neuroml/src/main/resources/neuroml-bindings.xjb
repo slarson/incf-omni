@@ -18,7 +18,7 @@
   </jxb:globalBindings>
   
 
-  <jxb:bindings schemaLocation="neuroml/Level1/MorphML_v1.8.1.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="Level1/MorphML_v1.8.1.xsd" node="/xs:schema">
     <jxb:bindings node="//xs:attribute[@name='fractAlongParent']">
       <jxb:property name="fractAlongParentValue"/>
     </jxb:bindings>
@@ -34,7 +34,7 @@
   </jxb:bindings>
 
   <!-- Metadata bindings -->
-  <jxb:bindings schemaLocation="neuroml/Level1/Metadata_v1.8.1.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="Level1/Metadata_v1.8.1.xsd" node="/xs:schema">
     <jxb:bindings node="/xs:schema/xs:complexType[11]/xs:all[1]/xs:element[1]">
       <jxb:property name="tagDeprecated"/>
     </jxb:bindings>
@@ -44,7 +44,7 @@
   </jxb:bindings>
 
   <!-- Biophysics bindings -->
-  <jxb:bindings schemaLocation="neuroml/Level2/Biophysics_v1.8.1.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="Level2/Biophysics_v1.8.1.xsd" node="/xs:schema">
     <jxb:bindings node="//xs:complexType[@name='Biophysics']">
       <jxb:class name="biophysicsType"/>
       <jxb:property name="biophysicsType"/>
@@ -64,7 +64,7 @@
   </jxb:bindings>
 
   <!-- Channel ML bindings -->
-  <jxb:bindings schemaLocation="neuroml/Level2/ChannelML_v1.8.1.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="Level2/ChannelML_v1.8.1.xsd" node="/xs:schema">
     <jxb:bindings node="//xs:complexType[@name='ChannelML']">
       <jxb:class name="channelmlType"/>
       <jxb:property name="channelmlType"/>
@@ -87,7 +87,7 @@
   </jxb:bindings>
 
   <!-- Network ML bindings -->
-  <jxb:bindings schemaLocation="neuroml/Level3/NetworkML_v1.8.1.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="Level3/NetworkML_v1.8.1.xsd" node="/xs:schema">
     <jxb:bindings node="//xs:element[@name = 'properties']">
       <jxb:property name="synapticProperties"/>
     </jxb:bindings>
@@ -115,7 +115,7 @@
   </jxb:bindings>
   
   <!-- Neuro ML Level3 bindings -->
-  <jxb:bindings schemaLocation="neuroml/Level3/NeuroML_Level3_v1.8.1.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="Level3/NeuroML_Level3_v1.8.1.xsd" node="/xs:schema">
     <jxb:bindings node="//xs:attribute[@name='length_units']">
       <jxb:property name="NeuroMLLengthUnits"/>
     </jxb:bindings>
