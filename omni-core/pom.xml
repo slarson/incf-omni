@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.incf</groupId>
 	<artifactId>omni-core</artifactId>
 	<name>INCF Object Model for Neuroinformatics Core</name>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<organization>
 		<name>International Neuroinformatics Coordinating Facility</name>
 		<url>http://incf.org</url>
@@ -23,20 +22,18 @@
 			</roles>
 		</developer>
 	</developers>
-	<!--
-		This document is a "project object model" from the Maven2 build
-		management system (http://maven.apache.org). Please download Maven and
-		run "mvn clean install" in the directory where this file lives to get
-		started.
-	-->
+	<scm>
+		<connection>scm:hg:https://incf-omni.googlecode.com/hg/omni-core</connection>
+		<developerConnection>scm:hg:https://incf-omni.googlecode.com/hg/omni-core</developerConnection>
+	</scm>
+	<!-- This document is a "project object model" from the Maven2 build management 
+		system (http://maven.apache.org). Please download Maven and run "mvn clean 
+		install" in the directory where this file lives to get started. -->
 	<build>
 		<plugins>
 
-			<!--
-				In order to understand when these plugins operate, you should look
-				into the lifecycle reference:
-				http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference
-			-->
+			<!-- In order to understand when these plugins operate, you should look 
+				into the lifecycle reference: http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference -->
 
 			<plugin>
 				<inherited>true</inherited>
@@ -47,22 +44,18 @@
 				</configuration>
 			</plugin>
 
-			<!--
-				This is the hyperjaxb3 plugin. During an install, this plugin is
-				responsible for finding the XSDs in the resources directory and
-				converting them into generated java classes
-			-->
+			<!-- This is the hyperjaxb3 plugin. During an install, this plugin is 
+				responsible for finding the XSDs in the resources directory and converting 
+				them into generated java classes -->
 			<plugin>
 				<!-- defines what plugin you are using -->
 				<groupId>org.jvnet.hyperjaxb3</groupId>
 				<artifactId>maven-hyperjaxb3-plugin
 				</artifactId>
 				<version>0.5.4</version>
-				<!--
-					defines at what point in the "maven build lifecycle" this plugin
-					should be run. Learning about maven lifecycles is a critical
-					concept for understanding how it works
-				-->
+				<!-- defines at what point in the "maven build lifecycle" this plugin 
+					should be run. Learning about maven lifecycles is a critical concept for 
+					understanding how it works -->
 				<executions>
 					<execution>
 						<goals>
@@ -73,8 +66,8 @@
 				<configuration>
 					<extension>true</extension>
 					<persistenceUnitName>omni</persistenceUnitName>
-					<!--<roundtripTestClassName>RoundtripTest</roundtripTestClassName>-->
-					<!-- <catalog>${basedir}/catalog.xml</catalog>-->
+					<!--<roundtripTestClassName>RoundtripTest</roundtripTestClassName> -->
+					<!-- <catalog>${basedir}/catalog.xml</catalog> -->
 				</configuration>
 			</plugin>
 
