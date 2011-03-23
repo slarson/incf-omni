@@ -3,7 +3,7 @@
 	<groupId>org.incf</groupId>
 	<artifactId>omni-core</artifactId>
 	<name>INCF Object Model for Neuroinformatics Core</name>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<organization>
 		<name>International Neuroinformatics Coordinating Facility</name>
 		<url>http://incf.org</url>
