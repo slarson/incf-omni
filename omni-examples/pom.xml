@@ -22,20 +22,14 @@
 			</roles>
 		</developer>
 	</developers>
-	<!--
-		This document is a "project object model" from the Maven2 build
-		management system (http://maven.apache.org). Please download Maven and
-		run "mvn clean install" in the directory where this file lives to get
-		started.
-	-->
+	<!-- This document is a "project object model" from the Maven2 build management 
+		system (http://maven.apache.org). Please download Maven and run "mvn clean 
+		install" in the directory where this file lives to get started. -->
 	<build>
 		<plugins>
 
-			<!--
-				In order to understand when these plugins operate, you should look
-				into the lifecycle reference:
-				http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference
-			-->
+			<!-- In order to understand when these plugins operate, you should look 
+				into the lifecycle reference: http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference -->
 
 			<plugin>
 				<inherited>true</inherited>
@@ -47,10 +41,8 @@
 			</plugin>
 
 			<plugin>
-				<!--
-					This goal will force Maven to build all included POMs up to the
-					package phase BEFORE the assembly is processed.
-				-->
+				<!-- This goal will force Maven to build all included POMs up to the 
+					package phase BEFORE the assembly is processed. -->
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.2-beta-2</version>
 				<executions>
@@ -71,6 +63,11 @@
 		</plugins>
 	</build>
 	<dependencies>
+		<dependency>
+			<groupId>org.incf</groupId>
+			<artifactId>omni-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>org.wholebrainproject</groupId>
 			<artifactId>wbc-client</artifactId>
