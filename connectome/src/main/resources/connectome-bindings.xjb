@@ -1,0 +1,30 @@
+<jxb:bindings version="2.1" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+  xmlns:pr="http://java.sun.com/xml/ns/persistence"
+  xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" jxb:extensionBindingPrefixes="hj">
+
+  <!-- 
+    This file enables connectome.xsd to be compiled into generated classes using JAXB
+    You can find more about this JAXB binding syntax here: http://j.mp/dNMs8y
+    
+    author: Stephen D Larson (stephen.larson@gmail.com)
+  -->
+
+  <jxb:globalBindings localScoping="toplevel">
+    <xjc:simple/>
+    <!--http://weblogs.java.net/blog/kohsuke/archive/2006/03/why_does_jaxb_p.html-->
+     <!-- See http://j.mp/faD24v for more on this serializable property -->
+    <jxb:serializable/>
+  </jxb:globalBindings>
+  
+  <!--
+  <jxb:bindings node="//xs:complexType[@name='SimpleLiteral']">
+    <jxb:property name="blah"/>
+  </jxb:bindings>
+  -->
+  
+ 
+
+</jxb:bindings>
