@@ -76,6 +76,16 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>org.neuroml</groupId>
+			<artifactId>neuroml</artifactId>
+			<version>1.8.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.connectomics</groupId>
+			<artifactId>connectome-file-format</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
