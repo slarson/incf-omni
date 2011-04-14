@@ -37,6 +37,17 @@
 
 
 <xs:complexType name="surfacetype">
+  
+  <xs:all>
+    <xs:element name="surface-label" type="labelstype" minOccurs="0">
+      <xsd:annotation xml:lang="en">
+        <xsd:documentation>
+          Reference the to Gifti file containing the labels. In this Gifti file, the labelid for a particular NIFTI_INTENT_LABEL
+          should be the same as the labelid as attibute of this element for the ConnectomeViewer to parse correctly
+        </xsd:documentation>
+      </xsd:annotation>
+    </xs:element>
+  </xs:all>
 
     <xs:attribute name="name" type="xs:string">
     <xsd:annotation xml:lang="en">
@@ -77,21 +88,20 @@
     </xsd:annotation>
     </xs:attribute>
 
-
-  <xs:all>
-    <xs:element name="surface-label" type="labelstype" minOccurs="0">
-    <xsd:annotation xml:lang="en">
-      <xsd:documentation>
-      Reference the to Gifti file containing the labels. In this Gifti file, the labelid for a particular NIFTI_INTENT_LABEL
-      should be the same as the labelid as attibute of this element for the ConnectomeViewer to parse correctly
-      </xsd:documentation>
-    </xsd:annotation>
-    </xs:element>
-  </xs:all>
-  
 </xs:complexType>
 
 <xs:complexType name="volumetype">
+  
+  <xs:all>
+    <xs:element name="description" type="xs:string" minOccurs="0">
+      <xsd:annotation xml:lang="en">
+        <xsd:documentation>
+          Description of the content of the file, for example wheter it is raw MRI data or a segmentation.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xs:element>
+  </xs:all>
+  
     <xs:attribute name="name" type="xs:string">
     <xsd:annotation xml:lang="en">
       <xsd:documentation>
@@ -124,29 +134,32 @@
       </xsd:documentation>
     </xsd:annotation>
     </xs:attribute>
-        
-  <xs:all>
-    <xs:element name="description" type="xs:string" minOccurs="0">
-    <xsd:annotation xml:lang="en">
-      <xsd:documentation>
-      Description of the content of the file, for example wheter it is raw MRI data or a segmentation.
-      </xsd:documentation>
-    </xsd:annotation>
-    </xs:element>
-  </xs:all>
+  
 </xs:complexType>
+  
+  <xs:complexType name="datakeyvaluetype">
+    <xs:attribute name="key" type="xs:string">
+      <xsd:annotation xml:lang="en">
+        <xsd:documentation>
+          The key to be used later in the dictionary
+        </xsd:documentation>
+      </xsd:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  
 
 <xs:complexType name="tracktype">
 
-<xs:complexType name="datakeyvaluetype">
-    <xs:attribute name="key" type="xs:string">
-    <xsd:annotation xml:lang="en">
-      <xsd:documentation>
-      The key to be used later in the dictionary
-      </xsd:documentation>
-    </xsd:annotation>
-    </xs:attribute>
-</xs:complexType>
+  <xs:all>
+    <xs:element name="description" type="xs:string" minOccurs="0">
+      <xsd:annotation xml:lang="en">
+        <xsd:documentation>
+          Description of the content of the file, e.g tractography algorithms
+        </xsd:documentation>
+      </xsd:annotation>
+    </xs:element>
+    
+  </xs:all>
 
     <xs:attribute name="name" type="xs:string">
     <xsd:annotation xml:lang="en">
@@ -172,20 +185,11 @@
     </xsd:annotation>
     </xs:attribute>
     
-  <xs:all>
-    <xs:element name="description" type="xs:string" minOccurs="0">
-    <xsd:annotation xml:lang="en">
-      <xsd:documentation>
-      Description of the content of the file, e.g tractography algorithms
-      </xsd:documentation>
-    </xsd:annotation>
-    </xs:element>
-    
-  </xs:all>
+ 
 </xs:complexType>
 <xs:complexType name="nwmetadatatype">
 
-  <xs:all>
+  <xs:sequence>
     <xs:element name="data" type="datakeyvaluetype" minOccurs="0" maxOccurs="unbounded">
     <xsd:annotation xml:lang="en">
       <xsd:documentation>
@@ -193,10 +197,49 @@
       </xsd:documentation>
     </xsd:annotation>
     </xs:element>
-  </xs:all>
+  </xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="networkstype">
+
+  <xs:sequence>
+    
+    <xs:element name="network-surface" type="surfacetype" minOccurs="0" maxOccurs="unbounded">
+      <xsd:annotation xml:lang="en">
+        <xsd:documentation>
+          All the surfaces corresponding to this network are stored in one Gifti file in the Gifti/ folder. Since the vertices id should be corresponding over all surfaces,
+          the nodes in the GraphML file have an unique intensityvalue integer corresponding to a set of surface vertices. This information is stored in the label Gifti file.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xs:element>
+    
+    <xs:element name="network-metadata" type="nwmetadatatype" minOccurs="0" maxOccurs="1">
+      <xsd:annotation xml:lang="en">
+        <xsd:documentation>
+          Often, there is particular metadata for networks one wants to use for later processing. For example one can annotate networks that represent subjects with
+          information about being member of the control or test group. The very flexible schema of a dictionary (key/value pairs) is adopted to represent any kind of
+          metadata. This is not typed yet and just uses strings for key and value.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xs:element>
+    
+    <xs:element name="network-volume" type="volumetype" minOccurs="0" maxOccurs="unbounded">
+      <xsd:annotation xml:lang="en">
+        <xsd:documentation>
+          All the volumes found in the Nifti directory for this specific network. It is not yet clear how exactly they will be used by the ConnectomeViewer application
+        </xsd:documentation>
+      </xsd:annotation>
+    </xs:element>
+    
+    <xs:element name="network-track" type="tracktype" minOccurs="0" maxOccurs="1">
+      <xsd:annotation xml:lang="en">
+        <xsd:documentation>
+          The track file in the Tracks/ directory that were the basis for the networks, if any.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xs:element>
+    
+  </xs:sequence>
 
     <xs:attribute name="name" type="xs:string">
     <xsd:annotation xml:lang="en">
@@ -238,44 +281,7 @@
     </xsd:annotation>
     </xs:attribute>
     
-  <xs:all>
-  
-          <xs:element name="network-surface" type="surfacetype" minOccurs="0" maxOccurs="unbounded">
-          <xsd:annotation xml:lang="en">
-            <xsd:documentation>
-            All the surfaces corresponding to this network are stored in one Gifti file in the Gifti/ folder. Since the vertices id should be corresponding over all surfaces,
-            the nodes in the GraphML file have an unique intensityvalue integer corresponding to a set of surface vertices. This information is stored in the label Gifti file.
-           </xsd:documentation>
-          </xsd:annotation>
-          </xs:element>
 
-          <xs:element name="network-metadata" type="nwmetadatatype" minOccurs="0" maxOccurs="1">
-          <xsd:annotation xml:lang="en">
-            <xsd:documentation>
-            Often, there is particular metadata for networks one wants to use for later processing. For example one can annotate networks that represent subjects with
-            information about being member of the control or test group. The very flexible schema of a dictionary (key/value pairs) is adopted to represent any kind of
-            metadata. This is not typed yet and just uses strings for key and value.
-           </xsd:documentation>
-          </xsd:annotation>
-          </xs:element>
-        
-          <xs:element name="network-volume" type="volumetype" minOccurs="0" maxOccurs="unbounded">
-          <xsd:annotation xml:lang="en">
-            <xsd:documentation>
-            All the volumes found in the Nifti directory for this specific network. It is not yet clear how exactly they will be used by the ConnectomeViewer application
-            </xsd:documentation>
-          </xsd:annotation>
-          </xs:element>
-       
-          <xs:element name="network-track" type="tracktype" minOccurs="0" maxOccurs="1">
-          <xsd:annotation xml:lang="en">
-            <xsd:documentation>
-            The track file in the Tracks/ directory that were the basis for the networks, if any.
-            </xsd:documentation>
-          </xsd:annotation>
-          </xs:element>
-
-  </xs:all>
 </xs:complexType>
 
 
