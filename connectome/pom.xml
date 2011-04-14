@@ -1,0 +1,150 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.connectomics</groupId>
+	<artifactId>connectome-file-format</artifactId>
+	<name>Connectome File Format Schemas and generated code</name>
+	<version>1.0-SNAPSHOT</version>
+	<organization>
+		<name>Connectome Viewer</name>
+		<url>http://www.connectomics.org/viewer</url>
+	</organization>
+	<description>The XML Schemas and java generated code.</description>
+	<url>http://www.connectomics.org/documentation/users/connectomefileformat.html</url>
+	<!--
+		This document is a "project object model" from the Maven2 build
+		management system (http://maven.apache.org). Please download Maven and
+		run "mvn clean install" in the directory where this file lives to get
+		started.
+	-->
+	<build>
+		<plugins>
+
+			<!--
+				In order to understand when these plugins operate, you should look
+				into the lifecycle reference:
+				http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference
+			-->
+
+			<plugin>
+				<inherited>true</inherited>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+
+			<!--
+				This is the hyperjaxb3 plugin. During an install, this plugin is
+				responsible for finding the XSDs in the resources directory and
+				converting them into generated java classes
+			-->
+			<plugin>
+				<!-- defines what plugin you are using -->
+				<groupId>org.jvnet.hyperjaxb3</groupId>
+				<artifactId>maven-hyperjaxb3-plugin
+				</artifactId>
+				<version>0.5.4</version>
+				<!--
+					defines at what point in the "maven build lifecycle" this plugin
+					should be run. Learning about maven lifecycles is a critical
+					concept for understanding how it works
+				-->
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<extension>true</extension>
+					<persistenceUnitName>neuroml</persistenceUnitName>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>ejb3-persistence</artifactId>
+			<version>1.0.2.GA</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.0.b2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>runtime</artifactId>
+			<version>0.4.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
+			<version>0.5.4</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>openccdb-public</id>
+			<url>http://openccdb.org:8081/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>openccdb-snapshot</id>
+			<url>http://openccdb.org:8081/nexus/content/groups/public-snapshots
+			</url>
+		</repository>
+		<repository>
+			<id>openccdb-thirdparty</id>
+			<url>http://openccdb.org:8081/nexus/content/repositories/thirdparty
+			</url>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Internal Releases</name>
+			<url>http://openccdb.org:8081/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Internal Snapshots</name>
+			<url>http://openccdb.org:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>
