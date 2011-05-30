@@ -16,7 +16,7 @@
         </xs:annotation>
         <xs:sequence>
 
-            <xs:element maxOccurs="1" name="position" type="Point3D">
+            <xs:element maxOccurs="1" name="position" type="Point3DType">
                 <xs:annotation>
                     <xs:documentation>Where it is in space, in absolute coordinates</xs:documentation>
                 </xs:annotation>
@@ -24,7 +24,7 @@
 
             <xs:element maxOccurs="1" name="rotation" type="Quaternion"/>
 
-            <xs:element maxOccurs="1" name="scale" type="Point3D"/>
+            <xs:element maxOccurs="1" name="scale" type="Point3DType"/>
 
             <xs:element maxOccurs="1" minOccurs="0" name="color" type="Color"/>
 
@@ -183,7 +183,7 @@
     
     
     <!-- Definition of a Point follows. -->
-    <xs:complexType name="Point3D">
+    <xs:complexType name="Point3DType">
         <xs:annotation>
             <xs:documentation>A 3D point with no diameter. Note: the units for these values
                         will be specified in the file in which the element is used, e.g.
@@ -354,7 +354,7 @@
                                     <xs:element name="region">
                                         <xs:complexType>
                                             <xs:sequence>
-                                                <xs:element name="point" type="Point3D"/>
+                                                <xs:element name="point" type="Point3DType"/>
                                             </xs:sequence>
                                         </xs:complexType>
                                     </xs:element>
