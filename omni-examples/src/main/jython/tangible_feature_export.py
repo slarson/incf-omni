@@ -57,7 +57,7 @@ def getInternalPoints( forest ):
 SCRIPT BEGINS HERE
 '''
 
-uri_strings = ["http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx",
+uri_strings = ["http://data.wholebraincatalog.org/tangibles/cellinstances/opfa4",
                "http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1128",
                "http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1130"]
 
