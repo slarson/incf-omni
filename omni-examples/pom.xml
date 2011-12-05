@@ -71,26 +71,25 @@
 		<dependency>
 			<groupId>org.wholebrainproject</groupId>
 			<artifactId>wbc-client</artifactId>
-			<version>0.7.7.16-SNAPSHOT</version>
+			<version>0.8.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wholebrainproject</groupId>
 			<artifactId>wbc-client-interface</artifactId>
-			<version>0.7.7.16-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.wholebrainproject</groupId>
-			<artifactId>wbc-io</artifactId>
-			<version>0.7.7.9</version>
-			<scope>compile</scope>
+			<version>0.8.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wholebrainproject</groupId>
 			<artifactId>wbc-core</artifactId>
-			<version>0.7.7.16</version>
+			<version>0.8.7</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+                <dependency>
+                        <groupId>org.wholebrainproject</groupId>
+                        <artifactId>wbc-io</artifactId>
+                        <version>0.11-SNAPSHOT</version>
+                </dependency>
 		<dependency>
 			<groupId>net.sourceforge.jnumerical</groupId>
 			<artifactId>jnumeric</artifactId>
