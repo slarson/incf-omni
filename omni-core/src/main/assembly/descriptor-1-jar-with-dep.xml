@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<assembly>
+  <id>with-dep</id>
+  <formats>
+    <format>jar</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  
+  <dependencySets>
+    <dependencySet>
+      <unpack>true</unpack>
+    </dependencySet>
+  </dependencySets>
+  
+</assembly>

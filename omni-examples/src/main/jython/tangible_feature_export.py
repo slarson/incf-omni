@@ -53,13 +53,29 @@ def getInternalPoints( forest ):
     
     return array_list
 
+#find endpoints (leaves) -- tree search
+#return results as an array with columns
+# x y z and one row per internal
+def getEndPoints( forest ):
+    endpoints = []
+    for i, v in enumerate(forest.getVertices()):
+        if (forest.isLeaf(v)):
+                endpoints.append(v)
+    
+    array_list = []
+    for v in endpoints:
+        array_list.append(array('f',[v.x, v.y, v.z]));
+    
+    return array_list
+
 '''
 SCRIPT BEGINS HERE
 '''
+# 080410_5L (Eugenol5, Mitral5)
 
-uri_strings = ["http://data.wholebraincatalog.org/tangibles/cellinstances/opfa4",
-               "http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1128",
-               "http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1130"]
+uri_strings = ["http://data.wholebraincatalog.org/tangibles/cellinstances/tc1kk"] 
+#               "http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1128",
+#               "http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1130"]
 
 # load the neuron from the Whole Brain Catalog
 # as a JUNG forest into the forests array
@@ -69,15 +85,15 @@ for uri_string in uri_strings:
 
 # find the points on the neuron that are not end points, 
 # which we refer to as internal points and get them as a list.
-internal_points = []
+end_points = []
 for f in forests:
-    internal_points.append(getInternalPoints(f))
+    end_points.append(getEndPoints(f))
 
 #Write the points out as a python pickle file so further analysis 
 #can take place outside of Jython.
 import pickle
-f = open('points.txt', 'w')
-pickle.dump(internal_points, f)
+f = open('endpoints.txt', 'w')
+pickle.dump(end_points, f)
 f.close()
 
-print "Wrote points.txt as a pickle file with contents of http://data.wholebraincatalog.org/tangibles/cellinstances/6xqgx, http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1128, http://data.wholebraincatalog.org/tangibles/cellinstances/Gr4_1130"
+print "Wrote endpoints.txt as a pickle file with contents of http://data.wholebraincatalog.org/tangibles/cellinstances/tc1kk"
